@@ -861,9 +861,9 @@ public class JsonUtilClient {
     if (m == null) {
       return null;
     }
-    ErasureCodingPolicy ecPolicy = toECPolicy(m);
-    int theState = getInt(m, "erasureCodingPolicyState", 1);
-    final ErasureCodingPolicyState ecPolicyState = ErasureCodingPolicyState.fromValue(theState);
+    ErasureCodingPolicy ecPolicy = toECPolicy((Map<?, ?>) m.get("policy"));
+    String state = getString(m, "state", "DISABLE");
+    final ErasureCodingPolicyState ecPolicyState = ErasureCodingPolicyState.valueOf(state);
     return new ErasureCodingPolicyInfo(ecPolicy, ecPolicyState);
   }
 

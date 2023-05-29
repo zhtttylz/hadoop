@@ -746,8 +746,9 @@ public class JsonUtil {
     if (ecPolicyInfo == null) {
       return null;
     }
-    Map<String, Object> m = getEcPolicyAsMap(ecPolicyInfo.getPolicy());
-    m.put("erasureCodingPolicyState", ecPolicyInfo.getState().getValue());
+    Map<String, Object> m = new HashMap<>();
+    m.put("policy", ecPolicyInfo.getPolicy());
+    m.put("state", ecPolicyInfo.getState());
     return m;
   }
 
@@ -760,7 +761,7 @@ public class JsonUtil {
         erasureCodingPolicyInfos[i] = toJsonMap(ecPolicyInfos[i]);
       }
     }
-    erasureCodingPolicies.put("ErasureCodingPolicyInfos", erasureCodingPolicyInfos);
+    erasureCodingPolicies.put("ErasureCodingPolicyInfo", erasureCodingPolicyInfos);
     return toJsonString("ErasureCodingPolicies", erasureCodingPolicies);
   }
 }
