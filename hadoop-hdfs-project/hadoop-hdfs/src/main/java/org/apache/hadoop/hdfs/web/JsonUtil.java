@@ -741,4 +741,26 @@ public class JsonUtil {
     m.put("remaining", status.getRemaining());
     return m;
   }
+
+  public static Map<String, Object> toJsonMap(ErasureCodingPolicyInfo ecPolicyInfo) {
+    if (ecPolicyInfo == null) {
+      return null;
+    }
+    Map<String, Object> m = getEcPolicyAsMap(ecPolicyInfo.getPolicy());
+    m.put("erasureCodingPolicyState", ecPolicyInfo.getState().getValue());
+    return m;
+  }
+
+  public static String toJsonString(ErasureCodingPolicyInfo[] ecPolicyInfos) {
+    final Map<String, Object> erasureCodingPolicies = new TreeMap<>();
+    Object[] erasureCodingPolicyInfos = null;
+    if (ecPolicyInfos != null && ecPolicyInfos.length > 0) {
+      erasureCodingPolicyInfos = new Object[ecPolicyInfos.length];
+      for (int i = 0; i < ecPolicyInfos.length; i++) {
+        erasureCodingPolicyInfos[i] = toJsonMap(ecPolicyInfos[i]);
+      }
+    }
+    erasureCodingPolicies.put("ErasureCodingPolicyInfos", erasureCodingPolicyInfos);
+    return toJsonString("ErasureCodingPolicies", erasureCodingPolicies);
+  }
 }
