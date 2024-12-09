@@ -18,6 +18,7 @@
 
 package org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity;
 
+import org.apache.hadoop.test.GenericTestUtils;
 import org.apache.hadoop.thirdparty.com.google.common.collect.ImmutableList;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.yarn.api.records.Container;
@@ -67,6 +68,7 @@ import org.apache.hadoop.yarn.util.resource.Resources;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.internal.NoExitSecurityManager;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -1070,6 +1072,37 @@ public class TestCapacitySchedulerAsyncScheduling {
             (Boolean) reservedProposalParts.get(2));
     Assert.assertFalse(isSuccess);
     rm.stop();
+  }
+
+  @Test(timeout = 30000)
+  public void testAsyncScheduleThreadExit() throws Exception {
+    // init RM & NM
+    final MockRM rm = new MockRM(conf);
+    rm.start();
+    rm.registerNode("192.168.0.1:1234", 8 * GB);
+    rm.drainEvents();
+
+    // Set no exit security manager to catch System.exit
+    SecurityManager originalSecurityManager = System.getSecurityManager();
+    NoExitSecurityManager noExitSecurityManager =
+        new NoExitSecurityManager(originalSecurityManager);
+    System.setSecurityManager(noExitSecurityManager);
+
+    // test async-scheduling thread exit
+    try{
+      // set resource calculator to be null to simulate
+      // NPE in async-scheduling thread
+      CapacityScheduler cs =
+          (CapacityScheduler) rm.getRMContext().getScheduler();
+      cs.setResourceCalculator(null);
+
+      // wait for RM to be shutdown until timeout
+      GenericTestUtils.waitFor(noExitSecurityManager::isCheckExitCalled,
+          100, 5000);
+    } finally {
+      System.setSecurityManager(originalSecurityManager);
+      rm.stop();
+    }
   }
 
   private ResourceCommitRequest createAllocateFromReservedProposal(
