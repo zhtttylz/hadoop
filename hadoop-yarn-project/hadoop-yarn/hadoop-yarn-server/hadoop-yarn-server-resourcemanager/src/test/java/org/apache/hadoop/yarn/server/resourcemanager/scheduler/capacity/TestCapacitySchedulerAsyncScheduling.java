@@ -929,7 +929,11 @@ public class TestCapacitySchedulerAsyncScheduling {
      * First proposal should be accepted, second proposal should be rejected
      * because it try to release an outdated reserved container
      */
-    MockRM rm1 = new MockRM();
+    // disable async-scheduling for simulating complex scene
+    Configuration disableAsyncConf = new Configuration(conf);
+    disableAsyncConf.setBoolean(
+        CapacitySchedulerConfiguration.SCHEDULE_ASYNCHRONOUSLY_ENABLE, false);
+    MockRM rm1 = new MockRM(disableAsyncConf);
     rm1.getRMContext().setNodeLabelManager(mgr);
     rm1.start();
     MockNM nm1 = rm1.registerNode("h1:1234", 8 * GB);
