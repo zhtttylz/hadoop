@@ -16,45 +16,21 @@
  * limitations under the License.
  */
 
-package org.apache.hadoop.hdfs.server.common;
+package org.apache.hadoop.hdfs.server.datanode;
+
+import java.util.List;
 
 /**
- * Use for manage a set of lock for datanode.
+ * This interface is used to generate sub lock name for a blockid.
  */
-public interface DataNodeLockManager<T extends AutoCloseDataSetLock> {
+public interface DataSetSubLockStrategy {
 
   /**
-   * Acquire block pool level first if you want to Acquire volume lock.
-   * Or only acquire block pool level lock.
+   * Generate sub lock name for the given blockid.
+   * @param blockid the block id.
+   * @return sub lock name for the input blockid.
    */
-  enum LockLevel {
-    BLOCK_POOl,
-    VOLUME,
-    DIR
-  }
+  String blockIdToSubLock(long blockid);
 
-  /**
-   * Acquire readLock and then lock.
-   */
-  T readLock(LockLevel level, String... resources);
-
-  /**
-   * Acquire writeLock and then lock.
-   */
-  T writeLock(LockLevel level, String... resources);
-
-  /**
-   * Add a lock to LockManager.
-   */
-  void addLock(LockLevel level, String... resources);
-
-  /**
-   * Remove a lock from LockManager.
-   */
-  void removeLock(LockLevel level, String... resources);
-
-  /**
-   * LockManager may need to back hook.
-   */
-  void hook();
+  List<String> getAllSubLockName();
 }
