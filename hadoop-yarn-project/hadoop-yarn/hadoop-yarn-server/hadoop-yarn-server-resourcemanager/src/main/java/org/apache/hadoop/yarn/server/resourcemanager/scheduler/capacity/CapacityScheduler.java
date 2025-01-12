@@ -604,7 +604,10 @@ public class CapacityScheduler extends
           if (candidates == null) {
             continue;
           }
-          cs.allocateContainersToNode(candidates, false);
+          int nodesPerPartitionCount = candidates.getAllNodes().size();
+          for (int i = 0; i < nodesPerPartitionCount; i++) {
+            cs.allocateContainersToNode(candidates, false);
+          }
         }
       }
 
@@ -620,7 +623,10 @@ public class CapacityScheduler extends
         if (candidates == null) {
           continue;
         }
-        cs.allocateContainersToNode(candidates, false);
+        int nodesPerPartitionCount = candidates.getAllNodes().size();
+        for (int i = 0; i < nodesPerPartitionCount; i++) {
+          cs.allocateContainersToNode(candidates, false);
+        }
       }
 
     }
