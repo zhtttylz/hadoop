@@ -64,6 +64,11 @@ public interface S3ATestConstants {
   String KEY_ACL_TESTS_ENABLED = TEST_FS_S3A + "create.acl.enabled";
 
   /**
+   * A property set to true if tests running in performance mode are enabled: {@value }
+   */
+  String KEY_PERFORMANCE_TESTS_ENABLED = TEST_FS_S3A + "performance.enabled";
+
+  /**
    * A property set to true if V1 tests are enabled: {@value}.
    */
   String KEY_LIST_V1_ENABLED = TEST_FS_S3A + "list.v1.enabled";

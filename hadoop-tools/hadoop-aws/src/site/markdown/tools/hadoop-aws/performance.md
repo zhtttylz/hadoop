@@ -294,6 +294,7 @@ understands the risks.
 * If an option is to be tuned which may relax semantics, a new option MUST be defined.
 * Unknown flags are ignored; this is to avoid compatibility.
 * The option `*` means "turn everything on". This is implicitly unstable across releases.
+* Other stores may retain stricter semantics.
 
 | *Option* | *Meaning*          | Since |
 |----------|--------------------|:------|

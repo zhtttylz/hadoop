@@ -581,6 +581,10 @@ on third party stores.
     <name>test.fs.s3a.create.create.acl.enabled</name>
     <value>false</value>
   </property>
+  <property>
+    <name>test.fs.s3a.performance.enabled</name>
+    <value>false</value>
+  </property>
 ```
 
 See [Third Party Stores](third_party_stores.html) for more on this topic.
@@ -720,6 +724,18 @@ Tests in `ITestS3AContentEncoding` may need disabling
     <value>false</value>
   </property>
 ```
+
+### Disabling tests running in performance mode
+
+Some tests running in performance mode turn off the safety checks. They expect operations which break POSIX semantics to succeed.
+For stores with stricter semantics, these test cases must be disabled.
+```xml
+  <property>
+    <name>test.fs.s3a.performance.enabled</name>
+    <value>false</value>
+  </property>
+```
+
 ### Tests which may fail (and which you can ignore)
 
 * `ITestS3AContractMultipartUploader` tests `testMultipartUploadAbort` and `testSingleUpload` raising `FileNotFoundException`
