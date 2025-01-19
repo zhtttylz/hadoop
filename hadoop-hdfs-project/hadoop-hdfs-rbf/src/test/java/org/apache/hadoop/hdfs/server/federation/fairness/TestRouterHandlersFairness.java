@@ -20,8 +20,8 @@ package org.apache.hadoop.hdfs.server.federation.fairness;
 import static org.apache.hadoop.hdfs.server.federation.fairness.RouterRpcFairnessConstants.CONCURRENT_NS;
 import static org.apache.hadoop.hdfs.server.federation.router.RBFConfigKeys.DFS_ROUTER_FAIRNESS_ACQUIRE_TIMEOUT;
 import static org.apache.hadoop.test.GenericTestUtils.assertExceptionContains;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
@@ -50,8 +50,8 @@ import org.apache.hadoop.hdfs.server.federation.router.RouterRpcClient;
 import org.apache.hadoop.ipc.RemoteException;
 import org.apache.hadoop.ipc.StandbyException;
 import org.apache.hadoop.test.LambdaTestUtils;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
@@ -113,7 +113,7 @@ public class TestRouterHandlersFairness {
     });
   }
 
-  @After
+  @AfterEach
   public void cleanup() {
     if (cluster != null) {
       cluster.shutdown();
@@ -295,8 +295,7 @@ public class TestRouterHandlersFairness {
         }
       }
     } else {
-      assertEquals("Number of failed RPCs without fairness configured",
-          0, overloadException.get());
+      assertEquals(0, overloadException.get(), "Number of failed RPCs without fairness configured");
     }
 
     // Test when handlers are not overloaded
@@ -357,8 +356,7 @@ public class TestRouterHandlersFairness {
         }
       } catch (RemoteException re) {
         IOException ioe = re.unwrapRemoteException();
-        assertTrue("Wrong exception: " + ioe,
-            ioe instanceof StandbyException);
+        assertTrue(ioe instanceof StandbyException, "Wrong exception: " + ioe);
         assertExceptionContains("is overloaded for NS", ioe);
         overloadException.incrementAndGet();
       } catch (Throwable e) {

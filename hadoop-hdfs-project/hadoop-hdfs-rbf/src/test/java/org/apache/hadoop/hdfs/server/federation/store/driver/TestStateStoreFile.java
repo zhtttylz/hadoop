@@ -27,9 +27,9 @@ import java.util.List;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.server.federation.store.driver.impl.StateStoreFileImpl;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -56,13 +56,13 @@ public class TestStateStoreFile extends TestStateStoreDriverBase {
     getStateStore(conf);
   }
 
-  @Before
+  @BeforeEach
   public void startup() throws Exception {
     setupCluster(numFileAsyncThreads);
     removeAll(getStateStoreDriver());
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     tearDownCluster();
   }

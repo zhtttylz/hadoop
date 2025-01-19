@@ -25,10 +25,10 @@ import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_NAMESERVICES;
 import static org.apache.hadoop.hdfs.client.HdfsClientConfigKeys.DFS_NAMENODE_RPC_ADDRESS_KEY;
 import static org.apache.hadoop.hdfs.server.federation.FederationTestUtils.NAMENODES;
 import static org.apache.hadoop.hdfs.server.federation.FederationTestUtils.NAMESERVICES;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,10 +48,10 @@ import org.apache.hadoop.hdfs.server.federation.resolver.FederationNamenodeConte
 import org.apache.hadoop.net.MockDomainNameResolver;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.service.Service.STATE;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.TestName;
 
 /**
@@ -67,7 +67,7 @@ public class TestRouterNamenodeHeartbeat {
   @Rule
   public TestName name = new TestName();
 
-  @BeforeClass
+  @BeforeAll
   public static void globalSetUp() throws Exception {
 
     cluster = new MiniRouterDFSCluster(true, 2);
@@ -95,7 +95,7 @@ public class TestRouterNamenodeHeartbeat {
     }
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDown() throws IOException {
     cluster.shutdown();
     for (NamenodeHeartbeatService service: services) {

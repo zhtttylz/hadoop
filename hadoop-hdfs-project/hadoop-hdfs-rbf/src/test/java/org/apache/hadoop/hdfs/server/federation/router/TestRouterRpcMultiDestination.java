@@ -19,11 +19,11 @@ package org.apache.hadoop.hdfs.server.federation.router;
 
 import static org.apache.hadoop.hdfs.server.federation.FederationTestUtils.createFile;
 import static org.apache.hadoop.hdfs.server.federation.FederationTestUtils.verifyFileExists;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -76,7 +76,7 @@ import org.apache.hadoop.ipc.CallerContext;
 import org.apache.hadoop.ipc.RemoteException;
 import org.apache.hadoop.ipc.StandbyException;
 import org.apache.hadoop.test.GenericTestUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.event.Level;
 
 /**
@@ -190,9 +190,8 @@ public class TestRouterRpcMultiDestination extends TestRouterRpc {
     }
 
     // Verify the total number of results found/matched
-    assertEquals(
-        requiredPaths + " doesn't match " + Arrays.toString(partialListing),
-        requiredPaths.size(), partialListing.length);
+    assertEquals(requiredPaths.size(), partialListing.length, requiredPaths +
+        " doesn't match " + Arrays.toString(partialListing));
   }
 
   /**
@@ -447,8 +446,7 @@ public class TestRouterRpcMultiDestination extends TestRouterRpc {
     // router1 should report partial results
     RouterContext router1 = routers.get(1);
     files = router1.getFileSystem().listStatus(new Path("/"));
-    assertTrue("Found " + files.length + " items, we should have less",
-        files.length < totalFiles);
+    assertTrue(files.length < totalFiles, "Found " + files.length + " items, we should have less");
 
 
     // Restore the HA context and the Router
@@ -483,8 +481,8 @@ public class TestRouterRpcMultiDestination extends TestRouterRpc {
       if (line.contains(auditFlag)) {
         // assert origin caller context exist in audit log
         String callerContext = line.substring(line.indexOf("callerContext="));
-        assertTrue(String.format("%s doesn't contain 'clientContext'", callerContext),
-            callerContext.contains("clientContext"));
+        assertTrue(callerContext.contains("clientContext"),
+            String.format("%s doesn't contain 'clientContext'", callerContext));
         // assert client ip info exist in caller context
         checkCallerContextContainsClientIp(clientIpInfos, callerContext);
       }
@@ -505,8 +503,8 @@ public class TestRouterRpcMultiDestination extends TestRouterRpc {
       if (callerContext.contains(curClientIpInfo)) {
         clientIpInfo = curClientIpInfo;
         // assert client ip info appears only once in caller context
-        assertEquals(String.format("%s contains %s more than once", callerContext, clientIpInfo),
-            callerContext.indexOf(clientIpInfo), callerContext.lastIndexOf(clientIpInfo));
+        assertEquals(callerContext.indexOf(clientIpInfo), callerContext.lastIndexOf(clientIpInfo),
+            String.format("%s contains %s more than once", callerContext, clientIpInfo));
         break;
       }
     }

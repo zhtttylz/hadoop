@@ -21,8 +21,8 @@ package org.apache.hadoop.hdfs.server.federation.router;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.contract.router.web.RouterWebHDFSContract;
 import org.junit.Rule;
-import org.junit.Test;
-import static org.junit.Assert.assertNotNull;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.rules.ExpectedException;
 import java.io.IOException;
 

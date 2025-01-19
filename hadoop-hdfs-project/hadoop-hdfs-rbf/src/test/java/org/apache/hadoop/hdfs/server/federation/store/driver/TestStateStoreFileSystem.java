@@ -29,9 +29,9 @@ import org.apache.hadoop.hdfs.server.federation.store.driver.impl.StateStoreFile
 import org.apache.hadoop.hdfs.server.federation.store.driver.impl.StateStoreFileSystemImpl;
 import org.apache.hadoop.hdfs.server.federation.store.records.MembershipState;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.stubbing.Answer;
@@ -76,13 +76,13 @@ public class TestStateStoreFileSystem extends TestStateStoreDriverBase {
     return Arrays.asList(new String[][] {{"20"}, {"0"}});
   }
 
-  @Before
+  @BeforeEach
   public void startup() throws Exception {
     setupCluster(numFsAsyncThreads);
     removeAll(getStateStoreDriver());
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     tearDownCluster();
     if (dfsCluster != null) {

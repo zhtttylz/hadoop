@@ -24,9 +24,9 @@ import static org.apache.hadoop.hdfs.server.federation.FederationTestUtils.simul
 import static org.apache.hadoop.hdfs.server.federation.FederationTestUtils.transitionClusterNSToStandby;
 import static org.apache.hadoop.hdfs.server.federation.FederationTestUtils.transitionClusterNSToActive;
 import static org.apache.hadoop.test.GenericTestUtils.assertExceptionContains;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.net.URI;
@@ -57,9 +57,9 @@ import org.apache.hadoop.test.GenericTestUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.hadoop.util.Time;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +77,7 @@ public class TestRouterClientRejectOverload {
 
   private StateStoreDFSCluster cluster;
 
-  @After
+  @AfterEach
   public void cleanup() {
     if (cluster != null) {
       cluster.shutdown();
@@ -174,8 +174,8 @@ public class TestRouterClientRejectOverload {
     long proxyOps0 = rpcMetrics0.getProxyOps() - iniProxyOps0;
     long proxyOps1 = rpcMetrics1.getProxyOps() - iniProxyOps1;
     assertEquals(2 * 10, proxyOps0 + proxyOps1);
-    assertTrue(proxyOps0 + " operations: not distributed", proxyOps0 >= 8);
-    assertTrue(proxyOps1 + " operations: not distributed", proxyOps1 >= 8);
+    assertTrue(proxyOps0 >= 8, proxyOps0 + " operations: not distributed");
+    assertTrue(proxyOps1 >= 8, proxyOps1 + " operations: not distributed");
   }
 
   private void testOverloaded(int expOverload) throws Exception {
@@ -221,7 +221,7 @@ public class TestRouterClientRejectOverload {
           routerProto.renewLease(clientName, null);
         } catch (RemoteException re) {
           IOException ioe = re.unwrapRemoteException();
-          assertTrue("Wrong exception: " + ioe, ioe instanceof StandbyException);
+          assertTrue(ioe instanceof StandbyException, "Wrong exception: " + ioe);
           assertExceptionContains("is overloaded", ioe);
           overloadException.incrementAndGet();
         } catch (IOException e) {
@@ -250,10 +250,8 @@ public class TestRouterClientRejectOverload {
     if (expOverloadMin == expOverloadMax) {
       assertEquals(expOverloadMin, num);
     } else {
-      assertTrue("Expected >=" + expOverloadMin + " but was " + num,
-          num >= expOverloadMin);
-      assertTrue("Expected <=" + expOverloadMax + " but was " + num,
-          num <= expOverloadMax);
+      assertTrue(num >= expOverloadMin, "Expected >=" + expOverloadMin + " but was " + num);
+      assertTrue(num <= expOverloadMax, "Expected <=" + expOverloadMax + " but was " + num);
     }
   }
 

@@ -17,10 +17,10 @@
  */
 package org.apache.hadoop.hdfs.server.federation.router;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -52,10 +52,11 @@ import org.apache.hadoop.hdfs.server.federation.store.records.MountTable;
 import org.apache.hadoop.service.Service.STATE;
 import org.apache.hadoop.test.GenericTestUtils;
 import org.apache.hadoop.util.Time;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 /**
  * This test class verifies that mount table cache is updated on all the routers
@@ -68,7 +69,7 @@ public class TestRouterMountTableCacheRefresh {
   private static RouterContext routerContext;
   private static MountTableManager mountTableManager;
 
-  @BeforeClass
+  @BeforeAll
   public static void setUp() throws Exception {
     curatorTestingServer = new TestingServer();
     curatorTestingServer.start();
@@ -95,7 +96,7 @@ public class TestRouterMountTableCacheRefresh {
         numNameservices, 60000);
   }
 
-  @AfterClass
+  @AfterAll
   public static void destory() {
     try {
       curatorTestingServer.close();
@@ -105,7 +106,7 @@ public class TestRouterMountTableCacheRefresh {
     }
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws IOException {
     clearEntries();
   }
@@ -200,8 +201,7 @@ public class TestRouterMountTableCacheRefresh {
             UpdateMountTableEntryRequest.newInstance(upateEntry));
     assertTrue(updateMountTableEntry.getStatus());
     MountTable updatedMountTable = getMountTableEntry(srcPath);
-    assertNotNull("Updated mount table entrty cannot be null",
-        updatedMountTable);
+    assertNotNull(updatedMountTable, "Updated mount table entrty cannot be null");
     assertEquals(1, updatedMountTable.getDestinations().size());
     assertEquals(key,
         updatedMountTable.getDestinations().get(0).getNameserviceId());
@@ -280,7 +280,8 @@ public class TestRouterMountTableCacheRefresh {
    * Verify cache update timeouts when any of the router takes more time than
    * the configured timeout period.
    */
-  @Test(timeout = 10000)
+  @Test
+  @Timeout(10000)
   public void testMountTableEntriesCacheUpdateTimeout() throws IOException {
     // Resources will be closed when router is closed
     @SuppressWarnings("resource")
@@ -346,7 +347,7 @@ public class TestRouterMountTableCacheRefresh {
     mountTableRefresherService.init(config);
     // Do refresh to created RouterClient
     mountTableRefresherService.refresh();
-    assertNotEquals("No RouterClient is created.", 0, createCounter.get());
+    assertNotEquals(0, createCounter.get(), "No RouterClient is created.");
     /*
      * Wait for clients to expire. Let's wait triple the cache eviction period.
      * After cache eviction period all created client must be removed and

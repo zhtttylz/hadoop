@@ -41,15 +41,15 @@ import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.security.token.delegation.AbstractDelegationTokenSecretManager;
 import org.apache.hadoop.service.ServiceStateException;
 import org.junit.rules.ExpectedException;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.apache.hadoop.test.LambdaTestUtils.intercept;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.apache.hadoop.fs.contract.router.SecurityConfUtil.initSecurity;
 import static org.apache.hadoop.fs.CommonConfigurationKeysPublic.HADOOP_SECURITY_AUTHENTICATION;
 import static org.apache.hadoop.hdfs.server.federation.router.RBFConfigKeys.DFS_ROUTER_DELEGATION_TOKEN_DRIVER_CLASS;
@@ -74,7 +74,7 @@ public class TestRouterSecurityManager {
 
   private static RouterSecurityManager securityManager = null;
 
-  @BeforeClass
+  @BeforeAll
   public static void createMockSecretManager() throws IOException {
     AbstractDelegationTokenSecretManager<DelegationTokenIdentifier>
         mockDelegationTokenSecretManager =
@@ -300,8 +300,8 @@ public class TestRouterSecurityManager {
 
     // Verify the token details with the expectedOwner
     JsonNode topTokenRealOwnersList = new ObjectMapper().readTree(topTokenRealOwners);
-    assertEquals("The key:name contains incorrect value " + topTokenRealOwners, expectedOwner,
-        topTokenRealOwnersList.get(0).get("name").asText());
+    assertEquals(expectedOwner, topTokenRealOwnersList.get(0).get("name").asText(),
+        "The key:name contains incorrect value " + topTokenRealOwners);
     // Destroy the cluster
     RouterHDFSContract.destroyCluster();
   }
