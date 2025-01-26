@@ -28,11 +28,11 @@ import static org.apache.hadoop.mapreduce.security.SecureShuffleUtils.HTTP_HEADE
 import static org.apache.hadoop.test.MetricsAsserts.assertCounter;
 import static org.apache.hadoop.test.MetricsAsserts.assertGauge;
 import static org.apache.hadoop.test.MetricsAsserts.getMetrics;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -79,8 +79,7 @@ import org.apache.hadoop.yarn.api.records.ApplicationId;
 import org.apache.hadoop.yarn.server.api.ApplicationInitializationContext;
 import org.apache.hadoop.yarn.server.api.ApplicationTerminationContext;
 import org.apache.hadoop.yarn.server.records.Version;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,8 +97,7 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
    *
    * @throws Exception exception
    */
-  @Test
-  @Timeout(value = 10)
+  @Test(timeout = 10000)
   public void testSerializeMeta() throws Exception {
     assertEquals(1, ShuffleHandler.deserializeMetaData(
         ShuffleHandler.serializeMetaData(1)));
@@ -114,8 +112,7 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
    *
    * @throws Exception exception
    */
-  @Test
-  @Timeout(value = 10)
+  @Test(timeout = 10000)
   public void testShuffleMetrics() throws Exception {
     MetricsSystem ms = new MetricsSystemImpl();
     ShuffleHandler sh = new ShuffleHandler(ms);
@@ -138,7 +135,7 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
   }
 
   static void checkShuffleMetrics(MetricsSystem ms, long bytes, int failed,
-      int succeeded, int connections) {
+                                  int succeeded, int connections) {
     MetricsSource source = ms.getSource("ShuffleMetrics");
     MetricsRecordBuilder rb = getMetrics(source);
     assertCounter("ShuffleOutputBytes", bytes, rb);
@@ -152,8 +149,7 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
    *
    * @throws Exception exception
    */
-  @Test
-  @Timeout(value = 10)
+  @Test(timeout = 10000)
   public void testMaxConnections() throws Exception {
     final int maxAllowedConnections = 3;
     final int notAcceptedConnections = 1;
@@ -199,34 +195,34 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
       connectionList.add(conn);
     }
 
-    assertEquals(
-       Sets.newHashSet(
+    assertEquals(String.format("Expected only %s and %s response",
+            OK_STATUS, ShuffleHandler.TOO_MANY_REQ_STATUS),
+        Sets.newHashSet(
             HttpURLConnection.HTTP_OK,
-            ShuffleHandler.TOO_MANY_REQ_STATUS.code())
-,         mapOfConnections.keySet(), String.format("Expected only %s and %s response",
-            OK_STATUS, ShuffleHandler.TOO_MANY_REQ_STATUS));
+            ShuffleHandler.TOO_MANY_REQ_STATUS.code()),
+        mapOfConnections.keySet());
 
     List<HttpURLConnection> successfulConnections =
         mapOfConnections.get(HttpURLConnection.HTTP_OK);
-    assertEquals(
-       maxAllowedConnections, successfulConnections.size(), String.format("Expected exactly %d requests " +
-            "with %s response", maxAllowedConnections, OK_STATUS));
+    assertEquals(String.format("Expected exactly %d requests " +
+            "with %s response", maxAllowedConnections, OK_STATUS),
+        maxAllowedConnections, successfulConnections.size());
 
     //Ensure exactly one connection is HTTP 429 (TOO MANY REQUESTS)
     List<HttpURLConnection> closedConnections =
         mapOfConnections.get(ShuffleHandler.TOO_MANY_REQ_STATUS.code());
-    assertEquals(
-       notAcceptedConnections, closedConnections.size(), String.format("Expected exactly %d %s response",
-            notAcceptedConnections, ShuffleHandler.TOO_MANY_REQ_STATUS));
+    assertEquals(String.format("Expected exactly %d %s response",
+            notAcceptedConnections, ShuffleHandler.TOO_MANY_REQ_STATUS),
+        notAcceptedConnections, closedConnections.size());
 
     // This connection should be closed because it is above the maximum limit
     HttpURLConnection conn = closedConnections.get(0);
-    assertEquals(
-       ShuffleHandler.TOO_MANY_REQ_STATUS.code(), conn.getResponseCode(), String.format("Expected a %s response",
-            ShuffleHandler.TOO_MANY_REQ_STATUS));
+    assertEquals(String.format("Expected a %s response",
+            ShuffleHandler.TOO_MANY_REQ_STATUS),
+        ShuffleHandler.TOO_MANY_REQ_STATUS.code(), conn.getResponseCode());
     long backoff = Long.parseLong(
         conn.getHeaderField(ShuffleHandler.RETRY_AFTER_HEADER));
-    assertTrue(backoff > 0, "The backoff value cannot be negative.");
+    assertTrue("The backoff value cannot be negative.", backoff > 0);
 
     shuffleHandler.stop();
   }
@@ -236,8 +232,7 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
    *
    * @throws Exception exception
    */
-  @Test
-  @Timeout(value = 10)
+  @Test(timeout = 10000)
   public void testKeepAlive() throws Exception {
     Configuration conf = new Configuration();
     ShuffleHandlerMock shuffleHandler = new ShuffleHandlerMock();
@@ -267,8 +262,8 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
     shuffleHandler.stop();
 
     List<String> actual = matchLogs("connections=\\d+");
-    assertEquals(
-       Arrays.asList("connections=1", "connections=0"), actual, "only one connection was used");
+    assertEquals("only one connection was used",
+        Arrays.asList("connections=1", "connections=0"), actual);
   }
 
   /**
@@ -277,8 +272,7 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
    *
    * @throws IOException exception
    */
-  @Test
-  @Timeout(value = 100)
+  @Test(timeout = 100000)
   public void testMapFileAccess() throws IOException {
     // This will run only in NativeIO is enabled as SecureIOUtils need it
     assumeTrue(NativeIO.isAvailable());
@@ -332,9 +326,9 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
       String message =
           "Owner '" + owner + "' for path " + indexFilePath
               + " did not match expected owner '" + randomUser + "'";
-      assertTrue(
-         receivedString.contains(message), String.format("Received string '%s' should contain " +
-              "message '%s'", receivedString, message));
+      assertTrue(String.format("Received string '%s' should contain " +
+              "message '%s'", receivedString, message),
+          receivedString.contains(message));
       assertEquals(HttpURLConnection.HTTP_INTERNAL_ERROR, conn.getResponseCode());
       LOG.info("received: " + receivedString);
       assertNotEquals("", receivedString);
@@ -460,8 +454,8 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
         shuffle.start();
         fail("Incompatible version, should expect fail here.");
       } catch (ServiceStateException e) {
-        assertTrue(
-           e.getMessage().contains("Incompatible version for state DB schema:"), "Exception message mismatch");
+        assertTrue("Exception message mismatch",
+            e.getMessage().contains("Incompatible version for state DB schema:"));
       }
 
     } finally {
@@ -471,7 +465,7 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
   }
 
   private static void verifyContent(HttpURLConnection conn,
-      String expectedContent) throws IOException {
+                                    String expectedContent) throws IOException {
     DataInputStream input = new DataInputStream(conn.getInputStream());
     ShuffleHeader header = new ShuffleHeader();
     header.readFields(input);
@@ -491,7 +485,7 @@ public class TestShuffleHandler extends TestShuffleHandlerBase {
   }
 
   private static URL geURL(String port, String jobId, int reduce, List<String> maps,
-      boolean keepAlive) throws MalformedURLException {
+                           boolean keepAlive) throws MalformedURLException {
     return new URL(getURLString(port, getUri(jobId, reduce, maps, keepAlive)));
   }
 
