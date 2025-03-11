@@ -33,8 +33,8 @@ import org.apache.hadoop.hdfs.server.federation.router.RouterClientProtocol;
 import org.apache.hadoop.hdfs.server.federation.router.RouterQuotaUsage;
 import org.apache.hadoop.hdfs.server.federation.router.TestRouterRPCMultipleDestinationMountTableResolver;
 import org.apache.hadoop.hdfs.server.federation.store.records.MountTable;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,9 +42,9 @@ import java.util.Map;
 
 import static org.apache.hadoop.hdfs.server.federation.router.RBFConfigKeys.DFS_ROUTER_ASYNC_RPC_ENABLE_KEY;
 import static org.apache.hadoop.hdfs.server.federation.router.async.utils.AsyncUtil.syncReturn;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests router async rpc with multiple destination mount table resolver.
@@ -52,7 +52,7 @@ import static org.junit.Assert.assertTrue;
 public class TestRouterAsyncRPCMultipleDestinationMountTableResolver extends
     TestRouterRPCMultipleDestinationMountTableResolver {
 
-  @BeforeClass
+  @BeforeAll
   public static void setUp() throws Exception {
 
     // Build and start a federated cluster.

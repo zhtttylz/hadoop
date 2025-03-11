@@ -23,15 +23,15 @@ import org.apache.hadoop.hdfs.server.federation.RouterConfigBuilder;
 import org.apache.hadoop.hdfs.server.federation.router.RBFConfigKeys;
 import org.apache.hadoop.hdfs.server.federation.router.TestRouterRpc;
 import org.apache.hadoop.security.UserGroupInformation;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.apache.hadoop.hdfs.server.federation.router.RBFConfigKeys.DFS_ROUTER_ASYNC_RPC_ENABLE_KEY;
 import static org.apache.hadoop.hdfs.server.federation.router.async.utils.AsyncUtil.syncReturn;
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
  * Testing the asynchronous RPC functionality of the router.
@@ -40,7 +40,7 @@ public class TestRouterAsyncRpc extends TestRouterRpc {
   private static MiniRouterDFSCluster cluster;
   private MiniRouterDFSCluster.RouterContext rndRouter;
 
-  @BeforeClass
+  @BeforeAll
   public static void globalSetUp() throws Exception {
     // Start routers with only an RPC service
     Configuration routerConf = new RouterConfigBuilder()
@@ -55,7 +55,7 @@ public class TestRouterAsyncRpc extends TestRouterRpc {
     setUp(routerConf);
   }
 
-  @Before
+  @BeforeEach
   public void testSetup() throws Exception {
     super.testSetup();
     cluster = super.getCluster();
