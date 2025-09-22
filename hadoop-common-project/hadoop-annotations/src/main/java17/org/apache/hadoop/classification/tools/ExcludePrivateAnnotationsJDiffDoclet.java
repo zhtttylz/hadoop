@@ -17,9 +17,9 @@
  */
 package org.apache.hadoop.classification.tools;
 
-import com.sun.javadoc.DocErrorReporter;
-import com.sun.javadoc.LanguageVersion;
-import com.sun.javadoc.RootDoc;
+import jdk.javadoc.doclet.DocletEnvironment;
+import jdk.javadoc.doclet.Reporter;
+import javax.lang.model.SourceVersion;
 
 import jdiff.JDiff;
 
@@ -32,11 +32,11 @@ import jdiff.JDiff;
  */
 public class ExcludePrivateAnnotationsJDiffDoclet {
   
-  public static LanguageVersion languageVersion() {
-    return LanguageVersion.JAVA_1_5;
+  public static SourceVersion languageVersion() {
+    return SourceVersion.RELEASE_17;
   }
   
-  public static boolean start(RootDoc root) {
+  public static boolean start(DocletEnvironment root) {
     System.out.println(
         ExcludePrivateAnnotationsJDiffDoclet.class.getSimpleName());
     return JDiff.start(RootDocProcessor.process(root));
@@ -51,7 +51,7 @@ public class ExcludePrivateAnnotationsJDiffDoclet {
   }
   
   public static boolean validOptions(String[][] options,
-      DocErrorReporter reporter) {
+      Reporter reporter) {
     StabilityOptions.validOptions(options, reporter);
     String[][] filteredOptions = StabilityOptions.filterOptions(options);
     return JDiff.validOptions(filteredOptions, reporter);
