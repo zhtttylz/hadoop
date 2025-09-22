@@ -46,14 +46,10 @@ public class ExcludePrivateAnnotationsStandardDoclet implements Doclet {
 
   public static boolean start(DocletEnvironment root) {
     System.out.println(ExcludePrivateAnnotationsStandardDoclet.class.getSimpleName());
-    DocletEnvironment excludedDoc = RootDocProcessor.process(root);
-    if (excludedDoc.getSpecifiedElements().isEmpty()) {
+    if (root.getSpecifiedElements().isEmpty()) {
       return true;
     }
-    // 用一个真正实现了 Doclet 的实例来跑
-    ExcludePrivateAnnotationsStandardDoclet d = new ExcludePrivateAnnotationsStandardDoclet();
-    d.init(Locale.getDefault(), null);
-    return d.run(excludedDoc);
+    return new StandardDoclet().run(root);
   }
 
   public static int optionLength(String option) {
@@ -88,8 +84,6 @@ public class ExcludePrivateAnnotationsStandardDoclet implements Doclet {
 
   @Override
   public Set<? extends Option> getSupportedOptions() {
-    // 先最小化：直接沿用标准 Doclet 的所有选项
-    // （如果你需要把 StabilityOptions 里的自定义开关也暴露出来，再加桥接 Option）
     return delegate.getSupportedOptions();
   }
 
@@ -101,9 +95,9 @@ public class ExcludePrivateAnnotationsStandardDoclet implements Doclet {
   @Override
   public boolean run(DocletEnvironment environment) {
     DocletEnvironment excluded = RootDocProcessor.process(environment);
-    if (excluded.getSpecifiedElements().isEmpty()) {
+    if (environment.getSpecifiedElements().isEmpty()) {
       return true;
     }
-    return delegate.run(excluded);
+    return delegate.run(environment);
   }
 }
