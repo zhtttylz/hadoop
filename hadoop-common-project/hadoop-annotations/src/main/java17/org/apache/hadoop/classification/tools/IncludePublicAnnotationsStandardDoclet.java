@@ -17,10 +17,14 @@
  */
 package org.apache.hadoop.classification.tools;
 
-import com.sun.javadoc.DocErrorReporter;
-import com.sun.javadoc.LanguageVersion;
-import com.sun.javadoc.RootDoc;
-import com.sun.tools.doclets.standard.Standard;
+import jdk.javadoc.doclet.Doclet;
+import jdk.javadoc.doclet.DocletEnvironment;
+import jdk.javadoc.doclet.Reporter;
+import javax.lang.model.SourceVersion;
+import jdk.javadoc.doclet.StandardDoclet;
+
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * A <a href="http://java.sun.com/javase/6/docs/jdk/api/javadoc/doclet/">Doclet</a>
@@ -33,17 +37,44 @@ import com.sun.tools.doclets.standard.Standard;
  * are also excluded.
  * It delegates to the Standard Doclet, and takes the same options.
  */
-public class IncludePublicAnnotationsStandardDoclet {
+public class IncludePublicAnnotationsStandardDoclet implements Doclet {
   
-  public static LanguageVersion languageVersion() {
-    return LanguageVersion.JAVA_1_5;
+  public static SourceVersion languageVersion() {
+    return SourceVersion.RELEASE_17;
   }
-  
-  public static boolean start(RootDoc root) {
-    System.out.println(
-        IncludePublicAnnotationsStandardDoclet.class.getSimpleName());
+
+  private final StandardDoclet delegate = new StandardDoclet();
+
+  @Override
+  public void init(Locale locale, Reporter reporter) {
+    delegate.init(locale, reporter);
+  }
+
+  @Override
+  public String getName() {
+    return IncludePublicAnnotationsStandardDoclet.class.getSimpleName();
+  }
+
+  @Override
+  public Set<? extends Doclet.Option> getSupportedOptions() {
+    return delegate.getSupportedOptions();
+  }
+
+  @Override
+  public SourceVersion getSupportedSourceVersion() {
+    return delegate.getSupportedSourceVersion();
+  }
+
+  @Override
+  public boolean run(DocletEnvironment env) {
+    System.out.println(getName());
     RootDocProcessor.treatUnannotatedClassesAsPrivate = true;
-    return Standard.start(RootDocProcessor.process(root));
+    DocletEnvironment filtered = RootDocProcessor.process(env);
+    return delegate.run(filtered);
+  }
+
+  public static boolean start(DocletEnvironment env) {
+    return new IncludePublicAnnotationsStandardDoclet().run(env);
   }
   
   public static int optionLength(String option) {
@@ -51,13 +82,19 @@ public class IncludePublicAnnotationsStandardDoclet {
     if (length != null) {
       return length;
     }
-    return Standard.optionLength(option);
+    for (jdk.javadoc.doclet.Doclet.Option o :
+        new StandardDoclet().getSupportedOptions()) {
+      for (String name : o.getNames()) {
+        if (name.equals(option)) {
+          return o.getArgumentCount() + 1;
+        }
+      }
+    }
+    return 0;
   }
   
-  public static boolean validOptions(String[][] options,
-      DocErrorReporter reporter) {
+  public static boolean validOptions(String[][] options, Reporter reporter) {
     StabilityOptions.validOptions(options, reporter);
-    String[][] filteredOptions = StabilityOptions.filterOptions(options);
-    return Standard.validOptions(filteredOptions, reporter);
+    return true;
   }
 }

@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.classification.tools;
 
-import com.sun.javadoc.DocErrorReporter;
+import jdk.javadoc.doclet.Reporter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ class StabilityOptions {
   }
 
   public static void validOptions(String[][] options,
-      DocErrorReporter reporter) {
+      Reporter reporter) {
     for (int i = 0; i < options.length; i++) {
       String opt = options[i][0].toLowerCase(Locale.ENGLISH);
       if (opt.equals(UNSTABLE_OPTION)) {

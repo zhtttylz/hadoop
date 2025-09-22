@@ -17,10 +17,10 @@
  */
 package org.apache.hadoop.classification.tools;
 
-import com.sun.javadoc.DocErrorReporter;
-import com.sun.javadoc.LanguageVersion;
-import com.sun.javadoc.RootDoc;
-import com.sun.tools.doclets.standard.Standard;
+import jdk.javadoc.doclet.DocletEnvironment;
+import jdk.javadoc.doclet.Reporter;
+import javax.lang.model.SourceVersion;
+import jdk.javadoc.doclet.StandardDoclet;
 
 /**
  * A <a href="http://java.sun.com/javase/6/docs/jdk/api/javadoc/doclet/">Doclet</a>
@@ -31,18 +31,18 @@ import com.sun.tools.doclets.standard.Standard;
  */
 public class ExcludePrivateAnnotationsStandardDoclet {
   
-  public static LanguageVersion languageVersion() {
-    return LanguageVersion.JAVA_1_5;
+  public static SourceVersion languageVersion() {
+    return SourceVersion.RELEASE_17;
   }
   
-  public static boolean start(RootDoc root) {
+  public static boolean start(DocletEnvironment root) {
     System.out.println(
         ExcludePrivateAnnotationsStandardDoclet.class.getSimpleName());
-    RootDoc excludedDoc = RootDocProcessor.process(root);
-    if (excludedDoc.specifiedPackages().length == 0) {
+    DocletEnvironment excludedDoc = RootDocProcessor.process(root);
+    if (excludedDoc.getSpecifiedElements().isEmpty()) {
       return true;
     }
-    return Standard.start(excludedDoc);
+    return new StandardDoclet().run(excludedDoc);
   }
   
   public static int optionLength(String option) {
@@ -50,13 +50,19 @@ public class ExcludePrivateAnnotationsStandardDoclet {
     if (length != null) {
       return length;
     }
-    return Standard.optionLength(option);
+    for (jdk.javadoc.doclet.Doclet.Option o :
+        new StandardDoclet().getSupportedOptions()) {
+      for (String name : o.getNames()) {
+        if (name.equals(option)) {
+          return o.getArgumentCount() + 1;
+        }
+      }
+    }
+    return 0;
   }
   
-  public static boolean validOptions(String[][] options,
-      DocErrorReporter reporter) {
+  public static boolean validOptions(String[][] options, Reporter reporter) {
     StabilityOptions.validOptions(options, reporter);
-    String[][] filteredOptions = StabilityOptions.filterOptions(options);
-    return Standard.validOptions(filteredOptions, reporter);
+    return true;
   }
 }
