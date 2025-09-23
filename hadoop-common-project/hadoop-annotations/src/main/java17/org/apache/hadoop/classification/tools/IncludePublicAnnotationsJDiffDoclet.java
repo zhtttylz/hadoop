@@ -17,11 +17,16 @@
  */
 package org.apache.hadoop.classification.tools;
 
+import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
+
 import javax.lang.model.SourceVersion;
 
 import jdiff.JDiff;
+
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * A <a href="http://java.sun.com/javase/6/docs/jdk/api/javadoc/doclet/">Doclet</a>
@@ -34,7 +39,40 @@ import jdiff.JDiff;
  * are also excluded.
  * It delegates to the JDiff Doclet, and takes the same options.
  */
-public class IncludePublicAnnotationsJDiffDoclet {
+public class IncludePublicAnnotationsJDiffDoclet implements Doclet {
+
+  private final JDiff delegate = new JDiff();
+  private Reporter reporter;
+  private Locale locale;
+
+  @Override
+  public void init(Locale locale, Reporter reporter) {
+    this.locale = locale;
+    this.reporter = reporter;
+    delegate.init(locale, reporter);
+  }
+
+  @Override
+  public String getName() {
+    return "IncludePublicAnnotationsJDiffDoclet";
+  }
+
+  @Override
+  public Set<Option> getSupportedOptions() {
+    return delegate.getSupportedOptions();
+  }
+
+  @Override
+  public SourceVersion getSupportedSourceVersion() {
+    return SourceVersion.RELEASE_17;
+  }
+
+  @Override
+  public boolean run(DocletEnvironment root) {
+    System.out.println(IncludePublicAnnotationsJDiffDoclet.class.getSimpleName());
+    RootDocProcessor.treatUnannotatedClassesAsPrivate = true;
+    return delegate.run(RootDocProcessor.process(root));
+  }
 
   public static SourceVersion languageVersion() {
     return SourceVersion.RELEASE_17;
