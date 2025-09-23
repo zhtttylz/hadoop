@@ -59,7 +59,70 @@ public class IncludePublicAnnotationsJDiffDoclet implements Doclet {
 
   @Override
   public Set<Option> getSupportedOptions() {
-    return delegate.getSupportedOptions();
+    Set<Option> s = new java.util.HashSet<>(delegate.getSupportedOptions());
+    s.add(new Option() {
+      @Override
+      public int getArgumentCount() {
+        return 0;
+      }
+
+      @Override
+      public String getDescription() {
+        return "";
+      }
+
+      @Override
+      public Kind getKind() {
+        return Kind.OTHER;
+      }
+
+      @Override
+      public java.util.List<String> getNames() {
+        return java.util.Collections.singletonList("-unstable");
+      }
+
+      @Override
+      public String getParameters() {
+        return "";
+      }
+
+      @Override
+      public boolean process(String opt, java.util.List<String> args) {
+        return true;
+      }
+    });
+    s.add(new Option() {
+      @Override
+      public int getArgumentCount() {
+        return 0;
+      }
+
+      @Override
+      public String getDescription() {
+        return "";
+      }
+
+      @Override
+      public Kind getKind() {
+        return Kind.OTHER;
+      }
+
+      @Override
+      public java.util.List<String> getNames() {
+        return java.util.Collections.singletonList("-evolving");
+      }
+
+      @Override
+      public String getParameters() {
+        return "";
+      }
+
+      @Override
+      public boolean process(String opt, java.util.List<String> args) {
+        return true;
+      }
+    });
+    return s;
   }
 
   @Override
