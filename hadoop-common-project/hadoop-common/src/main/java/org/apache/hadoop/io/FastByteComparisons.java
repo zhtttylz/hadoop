@@ -18,9 +18,8 @@
 package org.apache.hadoop.io;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InaccessibleObjectException;
 import java.nio.ByteOrder;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -137,23 +136,15 @@ abstract class FastByteComparisons {
       static final int BYTE_ARRAY_BASE_OFFSET;
 
       static {
-        theUnsafe = (Unsafe) AccessController.doPrivileged(
-            new PrivilegedAction<Object>() {
-              @Override
-              public Object run() {
-                try {
-                  Field f = Unsafe.class.getDeclaredField("theUnsafe");
-                  f.setAccessible(true);
-                  return f.get(null);
-                } catch (NoSuchFieldException e) {
-                  // It doesn't matter what we throw;
-                  // it's swallowed in getBestComparer().
-                  throw new Error();
-                } catch (IllegalAccessException e) {
-                  throw new Error();
-                }
-              }
-            });
+        try {
+          Field f = Unsafe.class.getDeclaredField("theUnsafe");
+          f.setAccessible(true);
+          theUnsafe = (Unsafe) f.get(null);
+        } catch (InaccessibleObjectException ioe) {
+          throw new IllegalStateException(ioe);
+        } catch (ReflectiveOperationException e) {
+          throw new Error();
+        }
 
         BYTE_ARRAY_BASE_OFFSET = theUnsafe.arrayBaseOffset(byte[].class);
 

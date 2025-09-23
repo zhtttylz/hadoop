@@ -21,7 +21,6 @@ package org.apache.hadoop.util.dynamic;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.HashMap;
 import java.util.Map;
@@ -193,7 +192,6 @@ public class DynConstructors {
 
       try {
         Constructor<T> hidden = targetClass.getDeclaredConstructor(types);
-        AccessController.doPrivileged(new MakeAccessible(hidden));
         ctor = new Ctor<T>(hidden, targetClass);
       } catch (NoSuchMethodException | SecurityException e) {
         // unusable or not the right implementation

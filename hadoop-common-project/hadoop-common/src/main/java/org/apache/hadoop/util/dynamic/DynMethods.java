@@ -22,7 +22,6 @@ package org.apache.hadoop.util.dynamic;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
 
@@ -428,7 +427,6 @@ public final class DynMethods {
 
       try {
         Method hidden = targetClass.getDeclaredMethod(methodName, argClasses);
-        AccessController.doPrivileged(new MakeAccessible(hidden));
         this.method = new UnboundMethod(hidden, name);
       } catch (SecurityException | NoSuchMethodException e) {
         // unusable or not the right implementation

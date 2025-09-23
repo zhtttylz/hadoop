@@ -18,7 +18,6 @@
 
 package org.apache.hadoop.util;
 
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
 
@@ -89,18 +88,16 @@ public class PlatformName {
    * @return true if the class is available, false otherwise.
    */
   private static boolean isSystemClassAvailable(String className) {
-    return AccessController.doPrivileged((PrivilegedAction<Boolean>) () -> {
-      try {
-        // Using ClassLoader.findSystemClass() instead of
-        // Class.forName(className, false, null) because Class.forName with a null
-        // ClassLoader only looks at the boot ClassLoader with Java 9 and above
-        // which doesn't look at all the modules available to the findSystemClass.
-        new SystemClassAccessor().getSystemClass(className);
-        return true;
-      } catch (Exception ignored) {
-        return false;
-      }
-    });
+    try {
+      // Using ClassLoader.findSystemClass() instead of
+      // Class.forName(className, false, null) because Class.forName with a null
+      // ClassLoader only looks at the boot ClassLoader with Java 9 and above
+      // which doesn't look at all the modules available to the findSystemClass.
+      new SystemClassAccessor().getSystemClass(className);
+      return true;
+    } catch (Exception ignored) {
+      return false;
+    }
   }
 
   public static void main(String[] args) {
