@@ -39,8 +39,8 @@ import static org.apache.hadoop.util.Preconditions.checkState;
  * Dynamic method invocation.
  * Taken from {@code org.apache.parquet.util.DynMethods}.
  */
-//@InterfaceAudience.LimitedPrivate("testing")
-//@InterfaceStability.Unstable
+@InterfaceAudience.LimitedPrivate("testing")
+@InterfaceStability.Unstable
 public final class DynMethods {
 
   private static final Logger LOG = LoggerFactory.getLogger(DynMethods.class);
