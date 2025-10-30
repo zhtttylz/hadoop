@@ -238,7 +238,7 @@
   <Match>
     <Class name="org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FSSchedulerNode" />
     <Method name="reserveResource" />
-    <Bug pattern="BC_UNCONFIRMED_CAST" /> 
+    <Bug pattern="BC_UNCONFIRMED_CAST" />
   </Match>
   <!-- Inconsistent sync warning - reinitialize read from other queue does not need sync-->
   <Match>
@@ -396,7 +396,7 @@
     <Medhod name="startGPG" />
     <Bug pattern="DM_EXIT" />
   </Match>
- 
+
   <!-- Ignore heartbeat exception when killing localizer -->
   <Match>
     <Class name="org.apache.hadoop.yarn.server.nodemanager.containermanager.localizer.ContainerLocalizer" />
@@ -428,7 +428,7 @@
     <Class name="org.apache.hadoop.yarn.server.nodemanager.containermanager.logaggregation.AppLogAggregatorImpl" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
-  
+
    <!-- /proc/mounts is always in the same place -->
   <Match>
     <Class name="org.apache.hadoop.yarn.server.nodemanager.util.CgroupsLCEResourcesHandler" />
@@ -584,7 +584,7 @@
     </Or>
     <Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING" />
   </Match>
-  
+
   <!-- Following fields are used in ErrorsAndWarningsBlock, which is not a part of analysis of findbugs -->
   <Match>
     <Class name="org.apache.hadoop.yarn.util.Log4jWarningErrorMetricsAppender$Element" />
@@ -726,4 +726,84 @@
     <Package name="org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.placement.schema" />
   </Match>
 
+  <!-- Ignore String == comparison in RMAdminCLI help builders -->
+  <Match>
+    <Class name="org.apache.hadoop.yarn.client.cli.RMAdminCLI" />
+    <Or>
+      <Method name="buildHelpMsg" />
+      <Method name="buildIndividualUsageMsg" />
+    </Or>
+    <Bug pattern="ES_COMPARING_STRINGS_WITH_EQ" />
+  </Match>
+
+  <!-- Ignore EI_EXPOSE_STATIC_REP2 for RMDelegationTokenIdentifier.Renewer#setSecretManager -->
+  <Match>
+    <Class name="org.apache.hadoop.yarn.security.client.RMDelegationTokenIdentifier$Renewer" />
+    <Method name="setSecretManager" />
+    <Bug pattern="EI_EXPOSE_STATIC_REP2" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.federation.cache.FederationCache$CacheRequest" />
+    <Bug pattern="SIC_INNER_SHOULD_BE_STATIC" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.sharedcachemanager.webapp.SCMWebServer$SCMWebApp" />
+    <Bug pattern="SIC_INNER_SHOULD_BE_STATIC" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.security.BaseContainerTokenSecretManager" />
+    <Field name="currentMasterKey" />
+    <Bug pattern="NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.security.BaseNMTokenSecretManager" />
+    <Field name="currentMasterKey" />
+    <Bug pattern="NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.security.http.RMAuthenticationFilter" />
+    <Method name="setDelegationTokenSecretManager" />
+    <Bug pattern="EI_EXPOSE_STATIC_REP2" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.timeline.security.TimelineAuthenticationFilter" />
+    <Method name="setTimelineDelegationTokenSecretManager" />
+    <Bug pattern="EI_EXPOSE_STATIC_REP2" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.nodemanager.webapp.ContainerShellWebSocket" />
+    <Method name="init" />
+    <Bug pattern="EI_EXPOSE_STATIC_REP2" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.nodemanager.containermanager.launcher.ContainerLaunch$UnixShellScriptBuilder" />
+    <Method name="errorCheck" />
+    <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.nodemanager.containermanager.localizer.ResourceLocalizationService$PublicLocalizer" />
+    <Method name="run" />
+    <Bug pattern="NP_NULL_ON_SOME_PATH_EXCEPTION" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.nodemanager.containermanager.resourceplugin.gpu.NvidiaDockerV2CommandPlugin" />
+    <Method name="updateDockerRunCommand" />
+    <Bug pattern="SBSC_USE_STRINGBUFFER_CONCATENATION" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.WeightQueueCapacityCalculator" />
+    <Method name="calculateMinimumResource" />
+    <Bug pattern="FE_FLOATING_POINT_EQUALITY" />
+  </Match>
 </FindBugsFilter>

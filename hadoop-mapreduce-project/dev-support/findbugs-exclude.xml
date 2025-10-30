@@ -40,16 +40,16 @@
        <Field name="_jspx_dependants" />
        <Bug pattern="UWF_UNWRITTEN_FIELD" />
      </Match>
-     <!-- 
+     <!--
        Inconsistent synchronization for Client.Connection.out is
-       is intentional to make a connection to be closed instantly. 
-     --> 
+       is intentional to make a connection to be closed instantly.
+     -->
      <Match>
        <Class name="org.apache.hadoop.ipc.Client$Connection" />
        <Field name="out" />
        <Bug pattern="IS2_INCONSISTENT_SYNC" />
      </Match>
-     <!-- 
+     <!--
        Ignore Cross Scripting Vulnerabilities
      -->
      <Match>
@@ -189,7 +189,7 @@
        <Bug pattern="NM_WRONG_PACKAGE_INTENTIONAL" />
      </Match>
      <!--
-       Ignoring this warning as resolving this would need a non-trivial change in code 
+       Ignoring this warning as resolving this would need a non-trivial change in code
      -->
      <Match>
        <Class name="org.apache.hadoop.mapred.lib.aggregate.ValueAggregatorBaseDescriptor" />
@@ -223,7 +223,7 @@
      </Match>
      <!--
        org.apache.hadoop.mapred.IndexCache is thread-safe. It does not need
-       synchronous access. 
+       synchronous access.
       -->
      <Match>
        <Class name="org.apache.hadoop.mapred.TaskTracker" />
@@ -305,8 +305,8 @@
        <Bug pattern="DM_EXIT" />
      </Match>
 
-     <!-- 
-        core changes 
+     <!--
+        core changes
      -->
      <Match>
        <Class name="~org.apache.hadoop.*" />
@@ -401,7 +401,7 @@
       <Bug pattern="ICAST_QUESTIONABLE_UNSIGNED_RIGHT_SHIFT" />
      </Match>
 
-     <!-- 
+     <!--
 	   False positive of FindBugs complaining that initializationPoller and
 	   started were accessed through
 	   CapacitySchedulerQueueRefresher.refreshQueues without explicitly holding
@@ -409,7 +409,7 @@
 	   JobTracker prior to calling QueueManager.refereshQueues - this is
 	   necessary to ensure the order of locking (TaskScheduler ->
 	   QueueManager).
-     --> 
+     -->
     <Match>
        <Class name="org.apache.hadoop.mapred.CapacityTaskScheduler" />
        <Field name="initializationPoller" />
@@ -420,7 +420,7 @@
        <Field name="started" />
        <Bug pattern="IS2_INCONSISTENT_SYNC" />
     </Match>
-  
+
    <!-- Yarn excludes -->
   <Match>
     <Class name="org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl" />
@@ -478,9 +478,9 @@
   <Match>
     <Package name="org.apache.hadoop.mapred.proto" />
   </Match>
-  
+
    <!--
-     The below fields are accessed locally and only via methods that are synchronized. 
+     The below fields are accessed locally and only via methods that are synchronized.
      -->
    <Match>
      <Class name="org.apache.hadoop.mapreduce.v2.app.rm.RMContainerAllocator" />
@@ -506,28 +506,28 @@
       <Field name="commitThreadCancelTimeoutMs" />
      <Bug pattern="IS2_INCONSISTENT_SYNC" />
    </Match>
- 
+
    <Match>
      <Class name="org.apache.hadoop.mapred.ShuffleHandler" />
       <Field name="sslFileBufferSize" />
      <Bug pattern="IS2_INCONSISTENT_SYNC" />
-   </Match> 
+   </Match>
 
    <Match>
      <Class name="org.apache.hadoop.mapred.ClientServiceDelegate" />
       <Method name="invoke" />
      <Bug pattern="SWL_SLEEP_WITH_LOCK_HELD" />
    </Match>
-   
+
   <Match>
     <Class name="org.apache.hadoop.mapreduce.util.ProcessTree" />
-     <Method name="sendSignal" />  
+     <Method name="sendSignal" />
     <Bug pattern="NP_GUARANTEED_DEREF_ON_EXCEPTION_PATH" />
   </Match>
-   
+
   <Match>
     <Class name="org.apache.hadoop.mapreduce.util.ProcessTree" />
-     <Method name="isSetsidSupported" />  
+     <Method name="isSetsidSupported" />
     <Bug pattern="NP_GUARANTEED_DEREF_ON_EXCEPTION_PATH" />
   </Match>
 
@@ -536,7 +536,7 @@
      <Method name="isSetsidSupported" />
     <Bug pattern="NP_NULL_ON_SOME_PATH_EXCEPTION" />
   </Match>
-   
+
   <Match>
     <Class name="org.apache.hadoop.mapreduce.v2.hs.CachedHistoryStorage$1" />
     <Bug pattern="SE_BAD_FIELD_INNER_CLASS" />
@@ -553,5 +553,53 @@
     </Or>
     <Method name="onSuccess" />
     <Bug pattern="NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.v2.util.MRApps" />
+    <Method name="setupDistributedCacheLocal" />
+    <Bug pattern="ENV_USE_PROPERTY_INSTEAD_OF_ENV" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.jobhistory.JobSubmitted" />
+    <Method name="customDecode" />
+    <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.jobhistory.MapAttemptFinished" />
+    <Method name="customDecode" />
+    <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.jobhistory.ReduceAttemptFinished" />
+    <Method name="customDecode" />
+    <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.jobhistory.TaskAttemptUnsuccessfulCompletion" />
+    <Method name="customDecode" />
+    <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.util.ProcessTree" />
+    <Method name="isSetsidSupported" />
+    <Bug pattern="NP_NULL_ON_SOME_PATH_EXCEPTION" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.util.ProcessTree" />
+    <Method name="isProcessGroupAlive" />
+    <Bug pattern="NP_NULL_ON_SOME_PATH_EXCEPTION" />
+  </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.lib.db.DataDrivenDBInputFormat" />
+    <Method name="getSplits" />
+    <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE" />
   </Match>
  </FindBugsFilter>
