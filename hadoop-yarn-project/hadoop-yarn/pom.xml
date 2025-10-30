@@ -44,7 +44,9 @@
         <artifactId>spotbugs-maven-plugin</artifactId>
          <configuration>
           <xmlOutput>true</xmlOutput>
-          <excludeFilterFile>${yarn.basedir}/dev-support/findbugs-exclude.xml</excludeFilterFile>
+           <excludeFilterFiles combine.children="append">
+             <excludeFilterFile>${yarn.basedir}/dev-support/findbugs-exclude.xml</excludeFilterFile>
+           </excludeFilterFiles>
           <effort>Max</effort>
         </configuration>
       </plugin>

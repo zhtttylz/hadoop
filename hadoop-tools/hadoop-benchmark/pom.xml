@@ -75,7 +75,9 @@
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
         <configuration>
-          <excludeFilterFile>${basedir}/src/main/findbugs/exclude.xml</excludeFilterFile>
+          <excludeFilterFiles combine.children="append">
+            <excludeFilterFile>${basedir}/src/main/findbugs/exclude.xml</excludeFilterFile>
+          </excludeFilterFiles>
         </configuration>
       </plugin>
       <plugin>

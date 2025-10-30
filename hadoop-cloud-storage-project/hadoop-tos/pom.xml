@@ -184,8 +184,10 @@
         <artifactId>spotbugs-maven-plugin</artifactId>
         <configuration>
           <xmlOutput>true</xmlOutput>
-          <excludeFilterFile>${basedir}/dev-support/findbugs-exclude.xml
-          </excludeFilterFile>
+          <excludeFilterFiles combine.children="append">
+            <excludeFilterFile>${basedir}/dev-support/findbugs-exclude.xml
+            </excludeFilterFile>
+          </excludeFilterFiles>
           <effort>Max</effort>
         </configuration>
       </plugin>
