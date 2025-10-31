@@ -42,7 +42,7 @@ import static org.apache.hadoop.yarn.util.resource.Resources.subtract;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+// CI: trigger SpotBugs (no-op)
 public class TestResources {
   private static final String INVALID_RESOURCE_MSG = "Invalid resource value";
 

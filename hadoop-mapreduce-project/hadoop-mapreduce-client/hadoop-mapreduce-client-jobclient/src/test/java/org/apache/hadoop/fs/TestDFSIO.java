@@ -100,6 +100,7 @@ import org.slf4j.LoggerFactory;
  * <li>standard deviation of i/o rate </li>
  * </ul>
  */
+// CI: trigger SpotBugs (no-op)
 public class TestDFSIO implements Tool {
   // Constants
   private static final Logger LOG = LoggerFactory.getLogger(TestDFSIO.class);

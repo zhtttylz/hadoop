@@ -31,6 +31,7 @@ import org.apache.hadoop.conf.TestConfigurationFieldsBase;
  * Refer to {@link org.apache.hadoop.conf.TestConfigurationFieldsBase}
  * for how this class works.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestYarnConfigurationFields extends TestConfigurationFieldsBase {
 
   @SuppressWarnings({"deprecation", "methodlength"})

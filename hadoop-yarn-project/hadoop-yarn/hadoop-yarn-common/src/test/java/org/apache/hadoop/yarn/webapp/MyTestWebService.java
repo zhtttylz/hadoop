@@ -32,6 +32,7 @@ import org.apache.hadoop.http.JettyUtils;
 
 @Singleton
 @Path("/ws/v1/test")
+// CI: trigger SpotBugs (no-op)
 public class MyTestWebService {
   @GET
   @Produces({ MediaType.APPLICATION_XML + "; " + JettyUtils.UTF_8 })
