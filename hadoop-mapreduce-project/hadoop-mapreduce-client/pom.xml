@@ -171,7 +171,7 @@
         </exclusions>
     </dependency>
   </dependencies>
- 
+
   <build>
     <plugins>
        <plugin>
@@ -181,6 +181,7 @@
           <xmlOutput>true</xmlOutput>
            <excludeFilterFiles combine.children="append">
              <excludeFilterFile>${mr.basedir}/dev-support/findbugs-exclude.xml</excludeFilterFile>
+             <excludeFilterFile>${session.executionRootDirectory}/dev-support/findbugs-exclude-global.xml</excludeFilterFile>
            </excludeFilterFiles>
           <effort>Max</effort>
        </configuration>
@@ -330,7 +331,7 @@
      </build>
    </profile>
   </profiles>
- 
+
   <modules>
     <module>hadoop-mapreduce-client-core</module>
     <module>hadoop-mapreduce-client-common</module>

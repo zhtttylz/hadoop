@@ -137,7 +137,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
      running all unit tests before the it.test option is picked up.
     -->
     <surefire.failIfNoSpecifiedTests>false</surefire.failIfNoSpecifiedTests>
-    <repo.root>${project.basedir}</repo.root>
   </properties>
 
   <modules>
@@ -538,6 +537,23 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>${spotbugs-maven-plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.hadoop</groupId>
+              <artifactId>hadoop-build-tools</artifactId>
+              <version>${project.version}</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <excludeFilterFiles>
+              <excludeFilterFile>spotbugs/findbugs-exclude-global.xml</excludeFilterFile>
+            </excludeFilterFiles>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
