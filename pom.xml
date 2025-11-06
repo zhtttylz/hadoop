@@ -137,6 +137,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
      running all unit tests before the it.test option is picked up.
     -->
     <surefire.failIfNoSpecifiedTests>false</surefire.failIfNoSpecifiedTests>
+    <repo.root>${maven.multiModuleProjectDirectory}</repo.root>
   </properties>
 
   <modules>
