@@ -13,6 +13,9 @@
         <Bug code="EI"/>
     </Match>
     <Match>
+        <Bug code="EI2"/>
+    </Match>
+    <Match>
         <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE"/>
     </Match>
     <Match>
