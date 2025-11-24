@@ -112,7 +112,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
-
+// CI: trigger SpotBugs (no-op)
 public abstract class BaseTestHttpFSWith extends HFSTestCase {
   protected abstract Path getProxiedFSTestDir();
 
@@ -816,7 +816,7 @@ public abstract class BaseTestHttpFSWith extends HFSTestCase {
     assertEquals(hdfsQuotaUsage.getTypeQuota(StorageType.DISK),
         httpQuotaUsage.getTypeQuota(StorageType.DISK));
   }
-  
+
   /** Set xattr */
   private void testSetXAttr() throws Exception {
     if (!isLocalFS()) {
@@ -827,7 +827,7 @@ public abstract class BaseTestHttpFSWith extends HFSTestCase {
       os.write(1);
       os.close();
       fs.close();
- 
+
       final String name1 = "user.a1";
       final byte[] value1 = new byte[]{0x31, 0x32, 0x33};
       final String name2 = "user.a2";

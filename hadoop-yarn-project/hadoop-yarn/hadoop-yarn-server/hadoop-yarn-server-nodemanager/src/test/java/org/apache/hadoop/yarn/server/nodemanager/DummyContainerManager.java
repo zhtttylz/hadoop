@@ -59,12 +59,12 @@ import org.apache.hadoop.yarn.server.nodemanager.containermanager.localizer.even
 import org.apache.hadoop.yarn.server.nodemanager.containermanager.loghandler.LogHandler;
 import org.apache.hadoop.yarn.server.nodemanager.containermanager.loghandler.event.LogHandlerEvent;
 import org.apache.hadoop.yarn.server.nodemanager.metrics.NodeManagerMetrics;
-
+// CI: trigger SpotBugs (no-op)
 public class DummyContainerManager extends ContainerManagerImpl {
 
   private static final Logger LOG =
        LoggerFactory.getLogger(DummyContainerManager.class);
-  
+
   public DummyContainerManager(Context context, ContainerExecutor exec,
       DeletionService deletionContext, NodeStatusUpdater nodeStatusUpdater,
       NodeManagerMetrics metrics, LocalDirsHandlerService dirsHandler) {
@@ -175,7 +175,7 @@ public class DummyContainerManager extends ContainerManagerImpl {
   protected LogHandler createLogHandler(Configuration conf,
       Context context, DeletionService deletionService) {
     return new LogHandler() {
-      
+
       @Override
       public void handle(LogHandlerEvent event) {
         switch (event.getType()) {
@@ -204,7 +204,7 @@ public class DummyContainerManager extends ContainerManagerImpl {
       boolean startRequest) throws YarnException {
     // do nothing
   }
-  
+
   @Override
   protected void authorizeGetAndStopContainerRequest(ContainerId containerId,
       Container container, boolean stopRequest, NMTokenIdentifier identifier,

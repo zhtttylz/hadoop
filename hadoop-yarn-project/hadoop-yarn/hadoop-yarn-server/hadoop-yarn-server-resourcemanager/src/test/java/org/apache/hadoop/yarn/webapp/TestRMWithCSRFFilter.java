@@ -64,6 +64,7 @@ import static org.mockito.Mockito.when;
  * Used TestRMWebServices as an example of web invocations of RM and added
  * test for CSRF Filter.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestRMWithCSRFFilter extends JerseyTestBase {
 
   private static MockRM rm;

@@ -19,6 +19,7 @@ package org.apache.hadoop.minikdc;
 
 import java.util.Properties;
 
+// CI: trigger SpotBugs (no-op)
 public class TestChangeOrgNameAndDomain extends TestMiniKdc {
 
   @Override

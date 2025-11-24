@@ -49,7 +49,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+// CI: trigger SpotBugs (no-op)
 public class TestUnmanagedAMLauncher {
   private static final Logger LOG = LoggerFactory
       .getLogger(TestUnmanagedAMLauncher.class);

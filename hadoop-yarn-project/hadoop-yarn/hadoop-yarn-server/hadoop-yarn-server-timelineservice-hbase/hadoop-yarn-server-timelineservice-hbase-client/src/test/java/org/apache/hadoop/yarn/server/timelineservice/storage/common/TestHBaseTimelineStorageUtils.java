@@ -39,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Unit tests for HBaseTimelineStorageUtils static methos.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestHBaseTimelineStorageUtils {
 
   private String hbaseConfigPath = "target/hbase-site.xml";

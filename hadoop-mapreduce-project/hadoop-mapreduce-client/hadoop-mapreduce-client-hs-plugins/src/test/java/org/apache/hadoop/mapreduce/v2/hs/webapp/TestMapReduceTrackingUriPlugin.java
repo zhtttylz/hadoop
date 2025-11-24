@@ -28,7 +28,7 @@ import org.apache.hadoop.mapreduce.v2.jobhistory.JHAdminConfig;
 import org.apache.hadoop.yarn.api.records.ApplicationId;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.junit.jupiter.api.Test;
-
+// CI: trigger SpotBugs (no-op)
 public class TestMapReduceTrackingUriPlugin {
   @Test
   void testProducesHistoryServerUriForAppId()

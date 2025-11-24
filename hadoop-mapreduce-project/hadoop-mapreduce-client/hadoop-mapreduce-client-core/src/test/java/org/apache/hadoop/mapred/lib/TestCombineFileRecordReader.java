@@ -38,7 +38,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
+// CI: trigger SpotBugs (no-op)
 public class TestCombineFileRecordReader {
 
   private static Path outDir = new Path(System.getProperty("test.build.data",

@@ -41,15 +41,15 @@ import org.apache.hadoop.yarn.proto.YarnSecurityTestTokenProtos.ContainerTokenId
 import org.apache.hadoop.thirdparty.protobuf.TextFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+// CI: trigger SpotBugs (no-op)
 public class ContainerTokenIdentifierForTest extends ContainerTokenIdentifier {
 
   private static Logger LOG = LoggerFactory.getLogger(ContainerTokenIdentifier.class);
 
   public static final Text KIND = new Text("ContainerToken");
-  
+
   private ContainerTokenIdentifierForTestProto proto;
-  
+
   public ContainerTokenIdentifierForTest(ContainerId containerID,
       String hostName, String appSubmitter, Resource r, long expiryTimeStamp,
       int masterKeyId, long rmIdentifier, Priority priority, long creationTime,
@@ -71,7 +71,7 @@ public class ContainerTokenIdentifierForTest extends ContainerTokenIdentifier {
       builder.setPriority(((PriorityPBImpl)priority).getProto());
     }
     builder.setCreationTime(creationTime);
-    
+
     if (logAggregationContext != null) {
       builder.setLogAggregationContext(
           ((LogAggregationContextPBImpl)logAggregationContext).getProto());
@@ -83,38 +83,38 @@ public class ContainerTokenIdentifierForTest extends ContainerTokenIdentifier {
       String message) {
     ContainerTokenIdentifierForTestProto.Builder builder =
         ContainerTokenIdentifierForTestProto.newBuilder();
-    ContainerIdPBImpl containerID = 
+    ContainerIdPBImpl containerID =
         (ContainerIdPBImpl)identifier.getContainerID();
     if (containerID != null) {
       builder.setContainerId(containerID.getProto());
     }
     builder.setNmHostAddr(identifier.getNmHostAddress());
     builder.setAppSubmitter(identifier.getApplicationSubmitter());
-    
+
     ResourcePBImpl resource = (ResourcePBImpl)identifier.getResource();
     if (resource != null) {
       builder.setResource(ProtoUtils.convertToProtoFormat(resource));
     }
-    
+
     builder.setExpiryTimeStamp(identifier.getExpiryTimeStamp());
     builder.setMasterKeyId(identifier.getMasterKeyId());
     builder.setRmIdentifier(identifier.getRMIdentifier());
-    
+
     PriorityPBImpl priority = (PriorityPBImpl)identifier.getPriority();
     if (priority != null) {
       builder.setPriority(priority.getProto());
     }
-    
+
     builder.setCreationTime(identifier.getCreationTime());
     builder.setMessage(message);
-    
-    LogAggregationContextPBImpl logAggregationContext = 
+
+    LogAggregationContextPBImpl logAggregationContext =
         (LogAggregationContextPBImpl)identifier.getLogAggregationContext();
-    
+
     if (logAggregationContext != null) {
       builder.setLogAggregationContext(logAggregationContext.getProto());
     }
-    
+
     proto = builder.build();
   }
 
@@ -162,7 +162,7 @@ public class ContainerTokenIdentifierForTest extends ContainerTokenIdentifier {
   public long getRMIdentifier() {
     return proto.getRmIdentifier();
   }
-  
+
   @Override
   public void readFields(DataInput in) throws IOException {
     DataInputStream dis = (DataInputStream)in;
@@ -175,11 +175,11 @@ public class ContainerTokenIdentifierForTest extends ContainerTokenIdentifier {
     LOG.debug("Writing ContainerTokenIdentifierForTest to RPC layer: {}", this);
     out.write(proto.toByteArray());
   }
-  
+
   ContainerTokenIdentifierForTestProto getNewProto() {
     return this.proto;
   }
-  
+
   @Override
   public int hashCode() {
     return this.proto.hashCode();
@@ -194,7 +194,7 @@ public class ContainerTokenIdentifierForTest extends ContainerTokenIdentifier {
     }
     return false;
   }
-  
+
   @Override
   public String toString() {
     return TextFormat.shortDebugString(this.proto);

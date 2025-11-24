@@ -24,7 +24,7 @@ import org.apache.hadoop.yarn.api.records.timeline.TimelineEntityGroupId;
 import java.util.Collection;
 import java.util.Set;
 import java.util.SortedSet;
-
+// CI: trigger SpotBugs (no-op)
 class EntityGroupPlugInForTest extends TimelineEntityGroupPlugin {
 
   static final String APP_ID_FILTER_NAME = "appid";

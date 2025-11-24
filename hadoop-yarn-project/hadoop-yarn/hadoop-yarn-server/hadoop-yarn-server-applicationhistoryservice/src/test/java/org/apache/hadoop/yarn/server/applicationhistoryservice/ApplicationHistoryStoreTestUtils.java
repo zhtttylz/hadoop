@@ -36,7 +36,7 @@ import org.apache.hadoop.yarn.server.applicationhistoryservice.records.Applicati
 import org.apache.hadoop.yarn.server.applicationhistoryservice.records.ApplicationStartData;
 import org.apache.hadoop.yarn.server.applicationhistoryservice.records.ContainerFinishData;
 import org.apache.hadoop.yarn.server.applicationhistoryservice.records.ContainerStartData;
-
+// CI: trigger SpotBugs (no-op)
 public class ApplicationHistoryStoreTestUtils {
 
   protected ApplicationHistoryStore store;

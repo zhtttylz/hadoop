@@ -36,7 +36,7 @@ import org.apache.hadoop.yarn.exceptions.YarnException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-
+// CI: trigger SpotBugs (no-op)
 public class TestAppReportFetcher {
 
   static ApplicationHistoryProtocol historyManager;

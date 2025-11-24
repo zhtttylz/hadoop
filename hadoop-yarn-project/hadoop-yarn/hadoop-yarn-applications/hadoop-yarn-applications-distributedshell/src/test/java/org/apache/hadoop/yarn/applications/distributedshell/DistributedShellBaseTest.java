@@ -81,6 +81,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * Base class for testing DistributedShell features.
  */
+// CI: trigger SpotBugs (no-op)
 @Timeout(160)
 public abstract class DistributedShellBaseTest {
   protected static final int MIN_ALLOCATION_MB = 128;

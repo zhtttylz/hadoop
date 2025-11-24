@@ -20,17 +20,17 @@ package org.apache.hadoop.nfs;
 import org.apache.hadoop.nfs.nfs3.Nfs3Constant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
+// CI: trigger SpotBugs (no-op)
 public class TestNfsExports {
 
   private final String address1 = "192.168.0.12";
   private final String address2 = "10.0.0.12";
   private final String hostname1 = "a.b.com";
   private final String hostname2 = "a.b.org";
-  
-  private static final long ExpirationPeriod = 
+
+  private static final long ExpirationPeriod =
       Nfs3Constant.NFS_EXPORTS_CACHE_EXPIRYTIME_MILLIS_DEFAULT * 1000 * 1000;
-  
+
   private static final int CacheSize = Nfs3Constant.NFS_EXPORTS_CACHE_SIZE_DEFAULT;
   private static final long NanosPerMillis = 1000000;
 
@@ -101,7 +101,7 @@ public class TestNfsExports {
 
   @Test
   public void testCidrLongRW() {
-    NfsExports matcher = new NfsExports(CacheSize, ExpirationPeriod, 
+    NfsExports matcher = new NfsExports(CacheSize, ExpirationPeriod,
         "192.168.0.0/255.255.252.0 rw");
     Assertions.assertEquals(AccessPrivilege.READ_WRITE,
         matcher.getAccessPrivilege(address1, hostname1));
@@ -110,7 +110,7 @@ public class TestNfsExports {
 
   @Test
   public void testCidrLongRO() {
-    NfsExports matcher = new NfsExports(CacheSize, ExpirationPeriod, 
+    NfsExports matcher = new NfsExports(CacheSize, ExpirationPeriod,
         "192.168.0.0/255.255.252.0");
     Assertions.assertEquals(AccessPrivilege.READ_ONLY,
         matcher.getAccessPrivilege(address1, hostname1));
@@ -156,7 +156,7 @@ public class TestNfsExports {
     Assertions.assertEquals(AccessPrivilege.READ_ONLY,
         matcher.getAccessPrivilege(address1, hostname2));
   }
-  
+
   @Test
   public void testRegexGrouping() {
     NfsExports matcher = new NfsExports(CacheSize, ExpirationPeriod,
@@ -174,11 +174,11 @@ public class TestNfsExports {
     Assertions.assertEquals(AccessPrivilege.READ_ONLY,
         matcher.getAccessPrivilege("1.2.3.4", "email.a.b.org"));
   }
-  
+
   @Test
   public void testMultiMatchers() throws Exception {
     long shortExpirationPeriod = 1 * 1000 * 1000 * 1000; // 1s
-    NfsExports matcher = new NfsExports(CacheSize, shortExpirationPeriod, 
+    NfsExports matcher = new NfsExports(CacheSize, shortExpirationPeriod,
         "192.168.0.[0-9]+;[a-z]+.b.com rw");
     Assertions.assertEquals(AccessPrivilege.READ_ONLY,
         matcher.getAccessPrivilege(address1, hostname2));
@@ -191,7 +191,7 @@ public class TestNfsExports {
     // address2 will hit the cache
     Assertions.assertEquals(AccessPrivilege.READ_WRITE,
         matcher.getAccessPrivilege(address2, hostname2));
-    
+
     Thread.sleep(1000);
     // no cache for address2 now
     AccessPrivilege ap;

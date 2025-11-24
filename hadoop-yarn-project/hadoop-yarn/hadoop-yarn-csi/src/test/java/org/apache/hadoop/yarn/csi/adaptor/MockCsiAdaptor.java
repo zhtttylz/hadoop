@@ -41,6 +41,7 @@ import java.io.IOException;
  * {@link CsiAdaptorServices} is loading classes using conf.getClass(),
  * the utility class is unable to resolve inner classes.
  */
+// CI: trigger SpotBugs (no-op)
 public class MockCsiAdaptor implements CsiAdaptorPlugin {
 
   private String driverName;

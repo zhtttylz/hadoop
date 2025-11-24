@@ -28,6 +28,7 @@ import org.apache.hadoop.yarn.api.records.YarnApplicationState;
 /**
  * Utilities to generate fake test apps
  */
+// CI: trigger SpotBugs (no-op)
 public class MockApps {
   static final Iterator<String> NAMES = Iterators.cycle("SleepJob",
       "RandomWriter", "TeraSort", "TeraGen", "PigLatin", "WordCount",

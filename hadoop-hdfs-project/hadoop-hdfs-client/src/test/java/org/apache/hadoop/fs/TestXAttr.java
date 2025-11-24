@@ -28,9 +28,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for <code>XAttr</code> objects.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestXAttr {
   private static XAttr XATTR, XATTR1, XATTR2, XATTR3, XATTR4, XATTR5;
-  
+
   @BeforeAll
   public static void setUp() throws Exception {
     byte[] value = {0x31, 0x32, 0x33};
@@ -64,7 +65,7 @@ public class TestXAttr {
       .setValue(value)
       .build();
   }
-  
+
   @Test
   public void testXAttrEquals() {
     assertNotSame(XATTR1, XATTR2);
@@ -82,7 +83,7 @@ public class TestXAttr {
     assertNotEquals(XATTR3, XATTR4);
     assertNotEquals(XATTR4, XATTR5);
   }
-  
+
   @Test
   public void testXAttrHashCode() {
     assertEquals(XATTR.hashCode(), XATTR1.hashCode());

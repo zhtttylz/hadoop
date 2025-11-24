@@ -58,6 +58,7 @@ import static org.mockito.Mockito.when;
 /**
  * Mocked service context for a running service.
  */
+// CI: trigger SpotBugs (no-op)
 public class MockRunningServiceContext extends ServiceContext {
 
   public MockRunningServiceContext(ServiceTestUtils.ServiceFSWatcher fsWatcher,

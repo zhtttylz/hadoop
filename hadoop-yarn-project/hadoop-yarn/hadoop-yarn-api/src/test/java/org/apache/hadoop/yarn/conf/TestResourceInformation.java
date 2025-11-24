@@ -31,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * Test class to verify various resource informations in a given resource.
  */
+// CI: trigger SpotBugs (no-op)
 class TestResourceInformation {
 
   @Test

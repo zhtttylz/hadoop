@@ -48,7 +48,7 @@ import java.util.Collections;
 import static org.apache.hadoop.hdfs.server.federation.FederationTestUtils.createNamenodeReport;
 import static org.apache.hadoop.test.LambdaTestUtils.intercept;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+// CI: trigger SpotBugs (no-op)
 public class TestRouterDistCpProcedure extends TestDistCpProcedure {
   private static StateStoreDFSCluster cluster;
   private static MiniRouterDFSCluster.RouterContext routerContext;

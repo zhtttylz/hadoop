@@ -37,6 +37,7 @@ import static org.apache.hadoop.util.PlatformName.IBM_JAVA;
 /**
  * Test helper class for Java Kerberos setup.
  */
+// CI: trigger SpotBugs (no-op)
 public class KerberosTestUtils {
   private static String keytabFile = new File(System.getProperty("test.dir", "target"),
           UUID.randomUUID().toString()).getAbsolutePath();
@@ -68,7 +69,7 @@ public class KerberosTestUtils {
     public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
       Map<String, String> options = new HashMap<String, String>();
       if (IBM_JAVA) {
-        options.put("useKeytab", KerberosTestUtils.getKeytabFile().startsWith("file://") ?   
+        options.put("useKeytab", KerberosTestUtils.getKeytabFile().startsWith("file://") ?
                     KerberosTestUtils.getKeytabFile() : "file://" +  KerberosTestUtils.getKeytabFile());
         options.put("principal", principal);
         options.put("refreshKrb5Config", "true");
@@ -83,7 +84,7 @@ public class KerberosTestUtils {
         options.put("renewTGT", "true");
         options.put("refreshKrb5Config", "true");
         options.put("isInitiator", "true");
-      } 
+      }
       String ticketCache = System.getenv("KRB5CCNAME");
       if (ticketCache != null) {
         if (IBM_JAVA) {

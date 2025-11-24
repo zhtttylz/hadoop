@@ -25,22 +25,22 @@ import org.apache.hadoop.io.Text;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+// CI: trigger SpotBugs (no-op)
 public class TestTaskContext {
 
   @Test
   public void testTaskContext() {
     TaskContext context = new TaskContext(null, null, null, null, null, null,
         null);
-    
+
     context.setInputKeyClass(IntWritable.class);
     assertEquals(IntWritable.class.getName(), context.getInputKeyClass
         ().getName());
- 
+
     context.setInputValueClass(Text.class);
     assertEquals(Text.class.getName(), context.getInputValueClass()
         .getName());
-   
+
     context.setOutputKeyClass(LongWritable.class);
     assertEquals(LongWritable.class.getName(), context
         .getOutputKeyClass().getName());

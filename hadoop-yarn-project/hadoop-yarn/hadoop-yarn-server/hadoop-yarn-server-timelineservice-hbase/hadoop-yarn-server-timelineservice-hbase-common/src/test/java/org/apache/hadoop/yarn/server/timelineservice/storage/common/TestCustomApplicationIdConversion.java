@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * incompatibility issue caused by mixing hadoop-common 2.5.1 and
  * hadoop-yarn-api 3.0. See YARN-6905.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestCustomApplicationIdConversion {
   @Test
   void testConvertAplicationIdToString() {

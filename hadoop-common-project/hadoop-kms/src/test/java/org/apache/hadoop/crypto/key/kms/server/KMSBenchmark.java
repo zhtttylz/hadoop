@@ -54,6 +54,7 @@ import java.util.List;
  * Meanwhile, if you change the usage of this program, please also update the
  * documentation accordingly.
  */
+// CI: trigger SpotBugs (no-op)
 public class KMSBenchmark implements Tool {
   private static final Logger LOG =
           LoggerFactory.getLogger(KMSBenchmark.class);

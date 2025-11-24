@@ -35,7 +35,7 @@ import org.apache.hadoop.util.ExitUtil;
 import org.apache.hadoop.util.ExitUtil.ExitException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+// CI: trigger SpotBugs (no-op)
 public class TestAggregateWordCount extends HadoopTestCase {
   public TestAggregateWordCount() throws IOException {
     super(LOCAL_MR, LOCAL_FS, 1, 1);

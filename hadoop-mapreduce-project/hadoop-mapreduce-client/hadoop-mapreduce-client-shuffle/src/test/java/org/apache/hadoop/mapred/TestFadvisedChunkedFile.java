@@ -28,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Unit test for FadvisedChunkedFile.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestFadvisedChunkedFile {
 
   @Test

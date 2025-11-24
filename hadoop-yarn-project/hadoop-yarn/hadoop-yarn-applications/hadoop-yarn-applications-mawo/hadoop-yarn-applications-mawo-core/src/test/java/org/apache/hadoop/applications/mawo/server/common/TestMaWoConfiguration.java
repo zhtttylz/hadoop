@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Test MaWo configuration.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestMaWoConfiguration {
 
   /**

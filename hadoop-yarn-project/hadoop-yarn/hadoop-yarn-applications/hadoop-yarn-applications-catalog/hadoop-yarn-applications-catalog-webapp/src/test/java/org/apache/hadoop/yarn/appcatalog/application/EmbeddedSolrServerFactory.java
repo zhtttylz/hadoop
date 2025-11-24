@@ -31,6 +31,7 @@ import java.nio.file.Paths;
 /**
  * Embedded solr server factory class for unit tests.
  */
+// CI: trigger SpotBugs (no-op)
 public final class EmbeddedSolrServerFactory {
 
   private EmbeddedSolrServerFactory() {

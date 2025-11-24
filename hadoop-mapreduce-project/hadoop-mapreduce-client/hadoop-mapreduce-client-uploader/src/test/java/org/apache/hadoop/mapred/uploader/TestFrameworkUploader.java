@@ -62,6 +62,7 @@ import static org.apache.hadoop.fs.FileSystem.FS_DEFAULT_NAME_KEY;
 /**
  * Unit test class for FrameworkUploader.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestFrameworkUploader {
   private static String testDir;
 

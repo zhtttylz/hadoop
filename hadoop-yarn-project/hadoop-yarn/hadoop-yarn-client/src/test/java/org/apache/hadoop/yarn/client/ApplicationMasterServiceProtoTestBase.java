@@ -31,6 +31,7 @@ import org.junit.jupiter.api.AfterEach;
 /**
  * Test Base for Application Master Service Protocol.
  */
+// CI: trigger SpotBugs (no-op)
 public abstract class ApplicationMasterServiceProtoTestBase
     extends ProtocolHATestBase {
 

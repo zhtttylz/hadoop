@@ -28,6 +28,7 @@ import org.apache.hadoop.yarn.exceptions.YarnException;
 /**
  * A dummy app checker class for testing only.
  */
+// CI: trigger SpotBugs (no-op)
 public class DummyAppChecker extends AppChecker {
   @Override
   @Private

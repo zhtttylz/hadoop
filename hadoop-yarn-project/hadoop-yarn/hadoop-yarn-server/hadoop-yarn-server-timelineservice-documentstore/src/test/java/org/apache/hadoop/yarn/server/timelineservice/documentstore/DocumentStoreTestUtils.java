@@ -33,6 +33,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 /**
  * This is util class for baking sample TimelineEntities data for test.
  */
+// CI: trigger SpotBugs (no-op)
 public final class DocumentStoreTestUtils {
 
   private DocumentStoreTestUtils(){}

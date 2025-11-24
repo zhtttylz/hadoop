@@ -56,6 +56,7 @@ import java.util.Map;
 /**
  * Tests {@link Router}.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestRouter {
 
   @Test

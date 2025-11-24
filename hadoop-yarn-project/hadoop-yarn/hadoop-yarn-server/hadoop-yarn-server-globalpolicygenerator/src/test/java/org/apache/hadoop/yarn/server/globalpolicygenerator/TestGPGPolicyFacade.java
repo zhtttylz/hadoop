@@ -61,6 +61,7 @@ import java.util.Set;
 /**
  * Unit test for GPG Policy Facade.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestGPGPolicyFacade {
 
   private Configuration conf;

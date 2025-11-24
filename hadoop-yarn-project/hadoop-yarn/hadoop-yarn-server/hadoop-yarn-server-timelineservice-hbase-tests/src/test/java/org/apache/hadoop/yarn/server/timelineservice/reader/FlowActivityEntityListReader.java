@@ -42,6 +42,7 @@ import java.util.Map;
  * aimed at adapting to the Jersey2 framework
  * to ensure that JSON can be converted into `List<FlowActivityEntity>`.
  */
+// CI: trigger SpotBugs (no-op)
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
 public class FlowActivityEntityListReader implements MessageBodyReader<List<FlowActivityEntity>> {

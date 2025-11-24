@@ -27,6 +27,7 @@ import org.apache.hadoop.mapreduce.Mapper;
  * Fails the Mapper. First attempt throws exception. Rest do System.exit.
  *
  */
+// CI: trigger SpotBugs (no-op)
 public class FailingMapper extends Mapper<Text, Text, Text, Text> {
   public void map(Text key, Text value,
       Context context) throws IOException,InterruptedException {
@@ -47,12 +48,12 @@ public class FailingMapper extends Mapper<Text, Text, Text, Text> {
     }.start();
 
     if (context.getTaskAttemptID().getId() == 0) {
-      System.out.println("Attempt:" + context.getTaskAttemptID() + 
+      System.out.println("Attempt:" + context.getTaskAttemptID() +
         " Failing mapper throwing exception");
-      throw new IOException("Attempt:" + context.getTaskAttemptID() + 
+      throw new IOException("Attempt:" + context.getTaskAttemptID() +
           " Failing mapper throwing exception");
     } else {
-      System.out.println("Attempt:" + context.getTaskAttemptID() + 
+      System.out.println("Attempt:" + context.getTaskAttemptID() +
       " Exiting");
       System.exit(-1);
     }

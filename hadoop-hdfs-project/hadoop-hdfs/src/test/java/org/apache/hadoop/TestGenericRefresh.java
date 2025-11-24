@@ -42,6 +42,7 @@ import org.mockito.Mockito;
  * After each test, the mock handlers are unregistered.
  * After all tests, the cluster is spun down.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestGenericRefresh {
   private static MiniDFSCluster cluster;
   private static Configuration config;
@@ -100,7 +101,7 @@ public class TestGenericRefresh {
   @Test
   public void testInvalidIdentifier() throws Exception {
     DFSAdmin admin = new DFSAdmin(config);
-    String [] args = new String[]{"-refresh", "localhost:" + 
+    String [] args = new String[]{"-refresh", "localhost:" +
         cluster.getNameNodePort(), "unregisteredIdentity"};
     int exitCode = admin.run(args);
     assertEquals(-1, exitCode, "DFSAdmin should fail due to no handler registered");

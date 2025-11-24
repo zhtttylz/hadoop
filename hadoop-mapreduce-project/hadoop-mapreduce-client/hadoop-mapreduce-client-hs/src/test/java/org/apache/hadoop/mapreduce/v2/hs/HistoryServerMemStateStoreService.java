@@ -26,6 +26,7 @@ import org.apache.hadoop.security.token.delegation.DelegationKey;
 /**
  * A state store backed by memory for unit tests
  */
+// CI: trigger SpotBugs (no-op)
 class HistoryServerMemStateStoreService
     extends HistoryServerStateStoreService {
 

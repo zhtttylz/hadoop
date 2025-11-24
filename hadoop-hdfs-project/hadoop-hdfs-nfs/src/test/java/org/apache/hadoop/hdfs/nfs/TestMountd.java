@@ -32,7 +32,7 @@ import org.apache.hadoop.hdfs.nfs.nfs3.RpcProgramNfs3;
 import org.apache.hadoop.oncrpc.XDR;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+// CI: trigger SpotBugs (no-op)
 public class TestMountd {
 
   public static final Logger LOG = LoggerFactory.getLogger(TestMountd.class);
@@ -44,11 +44,11 @@ public class TestMountd {
     MiniDFSCluster cluster = new MiniDFSCluster.Builder(config).numDataNodes(1)
         .build();
     cluster.waitActive();
-    
+
     // Use emphral port in case tests are running in parallel
     config.setInt("nfs3.mountd.port", 0);
     config.setInt("nfs3.server.port", 0);
-    
+
     int newTimeoutMillis = 1000; // 1s
     // Set the new portmap rpc timeout values and check
     config.setInt(NfsConfigKeys.NFS_UDP_CLIENT_PORTMAP_TIMEOUT_MILLIS_KEY,
@@ -68,7 +68,7 @@ public class TestMountd {
     RpcProgramNfs3 nfsd = (RpcProgramNfs3) nfs3.getRpcProgram();
     nfsd.nullProcedure();
     assertTrue(nfsd.getPortmapUdpTimeoutMillis() == newTimeoutMillis);
-    
+
     cluster.shutdown();
   }
 }

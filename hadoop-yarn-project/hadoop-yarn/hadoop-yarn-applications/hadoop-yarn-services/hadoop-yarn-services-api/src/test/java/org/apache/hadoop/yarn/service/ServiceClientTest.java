@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
  * to simulate various error conditions that will happen
  * when a consumer class calls ServiceClient.
  */
+// CI: trigger SpotBugs (no-op)
 public class ServiceClientTest extends ServiceClient {
 
   private Configuration conf = new Configuration();

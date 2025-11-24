@@ -47,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * Test ResourceTrackerPBClientImpl. this class should have methods
  * registerNodeManager and newRecordInstance.
  */
+// CI: trigger SpotBugs (no-op)
 public class TestResourceTrackerPBClientImpl {
 
   private static ResourceTracker client;
@@ -79,14 +80,14 @@ public class TestResourceTrackerPBClientImpl {
   /**
    * Test the method registerNodeManager. Method should return a not null
    * result.
-   * 
+   *
    */
   @Test
   public void testResourceTrackerPBClientImpl() throws Exception {
     RegisterNodeManagerRequest request = recordFactory
         .newRecordInstance(RegisterNodeManagerRequest.class);
     assertNotNull(client.registerNodeManager(request));
-    
+
     ResourceTrackerTestImpl.exception = true;
     try {
       client.registerNodeManager(request);
@@ -101,7 +102,7 @@ public class TestResourceTrackerPBClientImpl {
 
   /**
    * Test the method nodeHeartbeat. Method should return a not null result.
-   * 
+   *
    */
 
   @Test
@@ -109,7 +110,7 @@ public class TestResourceTrackerPBClientImpl {
     NodeHeartbeatRequest request = recordFactory
         .newRecordInstance(NodeHeartbeatRequest.class);
     assertNotNull(client.nodeHeartbeat(request));
-    
+
     ResourceTrackerTestImpl.exception = true;
     try {
       client.nodeHeartbeat(request);
