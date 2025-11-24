@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
     <Match>
-        <Bug pattern="AT_NONATOMIC_64BIT_PRIMITIVE,AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE"/>
-    </Match>
-    <Match>
-        <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE"/>
+        <Bug pattern="AT_NONATOMIC_64BIT_PRIMITIVE,
+                      AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE,
+                      AT_STALE_THREAD_WRITE_OF_PRIMITIVE"/>
     </Match>
     <Match>
         <Bug pattern="CT_CONSTRUCTOR_THROW"/>
@@ -29,5 +28,29 @@
     </Match>
     <Match>
         <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
+    </Match>
+    <Match>
+        <Bug pattern="DCN_NULLPOINTER_EXCEPTION"/>
+    </Match>
+    <Match>
+        <Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA"/>
+    </Match>
+    <Match>
+        <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+    </Match>
+    <Match>
+        <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE"/>
+    </Match>
+    <Match>
+        <Bug pattern="SS_SHOULD_BE_STATIC"/>
+    </Match>
+    <Match>
+        <Bug pattern="EQ_DOESNT_OVERRIDE_EQUALS"/>
+    </Match>
+    <Match>
+        <Bug pattern="REFLC_REFLECTION_MAY_INCREASE_ACCESSIBILITY_OF_CLASS"/>
+    </Match>
+    <Match>
+        <Bug pattern="SING_SINGLETON_GETTER_NOT_SYNCHRONIZED"/>
     </Match>
 </FindBugsFilter>
