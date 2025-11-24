@@ -602,4 +602,10 @@
     <Method name="getSplits" />
     <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE" />
   </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.examples.DBCountPageView" />
+    <Method name="verify" />
+    <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE" />
+  </Match>
  </FindBugsFilter>
