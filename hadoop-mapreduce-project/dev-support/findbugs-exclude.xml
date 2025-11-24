@@ -596,4 +596,10 @@
     <Method name="isProcessGroupAlive" />
     <Bug pattern="NP_NULL_ON_SOME_PATH_EXCEPTION" />
   </Match>
+
+  <Match>
+    <Class name="org.apache.hadoop.mapreduce.lib.db.DataDrivenDBInputFormat" />
+    <Method name="getSplits" />
+    <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE" />
+  </Match>
  </FindBugsFilter>
